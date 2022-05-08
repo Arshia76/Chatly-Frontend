@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    margin: 15px 0;
+}
+
+
+.group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 10px;
+    background-color: #F7F4F0;
+    padding: 10px;
+    border-radius: 7px;
+    width: fit-content;
+    max-width: 50%;
+}
+
+.container2 .group {
+    background-color: transparent;
+}
+
+.container .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.container p {
+    font-size: 15px;
+    word-break: break-all;
+    width: fit-content;
+    text-align: justify;
+}
+
+.container span {
+    font-size: 14px;
+    color: #c46b6b;
+}
+
+.container img {
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    max-width: 80%;
+    max-height: 80%;
+}

@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.theme {
+    display: flex;
+    align-items: center;
+}
+
+.theme div {
+    background-color: #258C60;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+ img {
+    width: 25px;
+    height: 25px;
+    object-fit: fill;
+}
+
+
+
+.notif {
+    position: relative;
+    cursor: pointer;
+}
+
+
+span {
+    font-size: 16px;
+    color: #A5A5A5;
+}
+
+.dot {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    position: absolute;
+    top: -14px;
+    right: -14px;
+}
+

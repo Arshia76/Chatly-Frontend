@@ -1,0 +1,119 @@
+.AddDoctorOverlay, .AddUserOverlay, .UploadDocumentOverlay, .AddOfficeOverlay, .CalendarOverlay,
+.TransferFromShafadocOverlay, .FilterOverlay {
+    inset: 0;
+    background: rgba(0, 0, 0, 0.51);
+    position: fixed;
+    z-index: 10000;
+}
+
+
+.AddDoctorModal, .AddUserModal, .UploadDocumentModal, .AddOfficeModal, .TransferFromShafadocModal,
+.FilterModal {
+    position: absolute;
+    opacity: 0;
+    transform: scale(.7);
+    transition: all 300ms ease-in-out;
+    inset: 80px;
+    background: #ECECEC;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    width: max-content;
+    height: max-content;
+    margin: auto;
+
+}
+
+.FilterModal {
+    inset: 40px;
+    overflow: visible;
+    margin-top: 80px !important;
+}
+
+.AddOfficeModal,.AddDoctorModal,.AddUserModal {
+    height: auto;
+}
+
+.TransferFromShafadocModal {
+    width: 400px;
+    overflow: visible;
+}
+
+.CalendarModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    opacity: 0;
+    transform: scale(.7);
+    transition: all 300s ease-in-out;
+    inset: 80px;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    margin: auto;
+    width: max-content;
+
+}
+
+.AddDoctorModal__after-open, .AddUserModal__after-open, .UploadDocumentModal__after-open, .AddOfficeModal__after-open,
+.CalendarModal__after-open, .TransferFromShafadocModal__after-open, .FilterModal__after-open {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.AddDoctorModal__before-close, .AddUserModal__before-close, .UploadDocumentModal__before-close, .AddOfficeModal__before-close,
+.CalendarModal__before-close, .TransferFromShafadocModal__before-close, .FilterModal__before-close {
+    opacity: 0;
+    transform: scale(.7);
+}
+
+
+@media (max-width: 768px) {
+    .AddOfficeModal {
+        width: unset;
+        height: unset;
+        inset: 40px;
+    }
+
+    .FilterModal {
+        margin-top: 50px !important;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .AddDoctorModal, .AddUserModal, .UploadDocumentModal, .AddOfficeModal {
+        width: unset;
+        height: unset;
+        inset: 40px;
+    }
+
+    .TransferFromShafadocModal {
+        inset: 20px;
+        width: 300px;
+    }
+
+    .CalendarModal {
+        width: unset;
+        inset: 20px;
+    }
+
+    .FilterModal {
+        inset: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .TransferFromShafadocModal {
+        inset: 10px;
+        width: 250px;
+    }
+
+
+}

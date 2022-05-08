@@ -1,13 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import './Resource/Stylesheets/reset.css';
+import './Resource/Stylesheets/config.css';
+import './Resource/Stylesheets/fontiran.css';
+import './Resource/Stylesheets/responsive.css';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router ,Routes, Route}
+ from 'react-router-dom';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage';
+import Resource from './Resource';
+import {store} from './store';
+import { Provider } from 'react-redux';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path={Resource.Routes.HOME} element={<HomePage/>}/>
+          <Route path={Resource.Routes.AUTH} element={<AuthPage/>}  />
+        </Routes>
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 

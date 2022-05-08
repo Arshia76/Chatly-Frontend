@@ -1,0 +1,75 @@
+.InputField.AuthField  {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #F4F8F7;
+    padding: 10px;
+    font-size: 1.4em;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #DCE0E4;
+}
+
+
+.InputField.SearchUserField {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+    color: black;
+    font-size: 16px;
+    padding: 2px 10px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border: 1px solid #adadad5f;
+    border-radius: 10px;
+}
+
+.InputField.SearchUserField img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.InputField.AuthField img {
+    width: 22px !important;
+    height: 22px !important;
+    object-fit: contain;
+}
+
+.InputField.AuthField:focus-within {
+    border: 1px solid aqua;
+}
+
+.InputGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+    margin-right: 1px;
+}
+
+.Input.AuthInput {
+    background-color: #F4F8F7;
+    padding: 5px;
+    border-radius: 2px;
+    color: black;
+    width: 100%;
+}
+
+
+.Input.SearchUserInput {
+    width: 100%;
+    padding: 5px;
+    color: black;
+}
+
+.Input.AuthInput::placeholder {
+    color: #3DB697;
+}
+
+.Input.SearchUserInput::placeholder {
+    color: #ADADAD;
+}
