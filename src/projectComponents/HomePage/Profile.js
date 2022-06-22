@@ -1,22 +1,79 @@
+import { useState } from 'react';
 import styles from '../../styles/components/HomePage/Profile.module.css';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { AiOutlinePlusCircle, AiOutlineUsergroupAdd } from 'react-icons/ai';
+import { HiOutlineLogout } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
+import { IoSettingsOutline } from 'react-icons/io5';
+import {
+  toggleModalGroupChat,
+  toggleModalProfile,
+  toggleModalSetting,
+  toggleModalSingleChat,
+} from '../../store/features/modalSlice';
+import Dropdown from '../../components/Dropdown';
+import { logoutUser } from '../../store/features/authSlice';
 
 const Profile = (props) => {
+  const dot = document.getElementById('dot');
+
+  document.addEventListener('click', function (event) {
+    var isClickInsideElement = dot.contains(event.target);
+    if (!isClickInsideElement) {
+      setShow(false);
+    }
+  });
+
+  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   return (
     <div className={styles.container}>
-      <img
-        src={
-          'https://cdn0.iconfinder.com/data/icons/mobile-basic-vol-1/32/Setting-128.png'
-        }
-        alt='setting'
+      <IoSettingsOutline
+        cursor={'pointer'}
+        onClick={() => dispatch(toggleModalSetting())}
+        size={30}
+        color='var(--text-primary)'
       />
-      <img
-        src={user.avatar || props.profileImg}
-        alt={user.username || props.username}
-      />
-      <h4>{user.username || props.username}</h4>
+      <div
+        className={styles.user}
+        onClick={() => dispatch(toggleModalProfile())}
+      >
+        <img
+          src={user.avatar || props.profileImg}
+          alt={user.username || props.username}
+        />
+        <h4>{user.username || props.username}</h4>
+      </div>
+      <Dropdown show={show} onClick={() => setShow(!show)}>
+        <div className={styles.chatgroup}>
+          <AiOutlinePlusCircle
+            onClick={() => {
+              dispatch(toggleModalSingleChat());
+              setShow(false);
+            }}
+            size={28}
+            color='white'
+            style={{ marginBottom: '15px', cursor: 'pointer' }}
+          />
+          <AiOutlineUsergroupAdd
+            onClick={() => {
+              dispatch(toggleModalGroupChat());
+              setShow(false);
+            }}
+            color='white'
+            size={30}
+            style={{ marginBottom: '15px', cursor: 'pointer' }}
+          />
+          <HiOutlineLogout
+            onClick={() => dispatch(logoutUser())}
+            color='white'
+            size={28}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+      </Dropdown>
     </div>
   );
 };

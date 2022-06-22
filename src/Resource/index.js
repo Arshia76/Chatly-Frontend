@@ -21,6 +21,9 @@ import BELL from './Svg/bell.svg';
 import GOOGLE from './images/google.png';
 import FACEBOOK from './images/facebook.png';
 import LOADER from './gif/loader.gif';
+import RECORDER from './gif/voice-recorder.gif';
+import BTN_LOADER from './gif/btn-loader.svg';
+import BTN_BLACK_LOADER from './gif/btn-loader-black.svg';
 
 class Resource {
   static Svg = {
@@ -46,6 +49,9 @@ class Resource {
 
   static Gifs = {
     LOADER,
+    RECORDER,
+    BTN_BLACK_LOADER,
+    BTN_LOADER,
   };
 
   static Images = {

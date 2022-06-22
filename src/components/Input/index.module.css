@@ -17,22 +17,35 @@
   padding-right: 5px;
 }
 
-.InputField.SearchUserField {
+.InputField.SearchUserField,
+.InputField.ChatNameField,
+.InputField.ProfileField {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #fff;
-  color: black;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
   font-size: 16px;
   padding: 2px 10px;
-  margin-bottom: 15px;
   margin-right: 5px;
   margin-left: 5px;
-  border: 1px solid #adadad5f;
-  border-radius: 10px;
+  border: 1px solid var(--input-border) !important;
 }
 
-.InputField.SearchUserField img {
+.InputField.ProfileField {
+  margin-bottom: 15px;
+}
+
+.InputField.SearchUserField {
+  margin-bottom: 0;
+}
+
+.InputField.ChatNameField {
+  margin-bottom: 10px;
+}
+
+.InputField.SearchUserField img,
+.InputField.ChatNameField img {
   width: 20px;
   height: 20px;
   object-fit: contain;
@@ -65,16 +78,19 @@
   width: 100%;
 }
 
-.Input.SearchUserInput {
+.Input.SearchUserInput,
+.Input.ChatNameInput,
+.Input.ProfileInput {
   width: 100%;
   padding: 5px;
-  color: black;
+  color: var(--text-primary);
 }
 
 .Input.AuthInput::placeholder {
   color: #3db697;
 }
 
-.Input.SearchUserInput::placeholder {
+.Input.SearchUserInput::placeholder,
+.Input.ChatNameInput::placeholder {
   color: #adadad;
 }

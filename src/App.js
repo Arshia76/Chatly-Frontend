@@ -1,4 +1,9 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 import Resource from './Resource';
@@ -6,19 +11,39 @@ import { useDispatch } from 'react-redux';
 import { useUser } from './api/useAuth';
 import PrivateRoute from './utils/PrivateRoute';
 import { setUser } from './store/features/authSlice';
+import { getSocket } from './store/features/chatSlice';
 import Loader from './projectComponents/Loader';
+import { io } from 'socket.io-client';
+import { useEffect } from 'react';
+import useLocalStorage from 'use-local-storage';
 
-// import { io } from 'socket.io-client';
+import 'react-toastify/dist/ReactToastify.css';
 
-// let socket;
+let socket;
 
 function App() {
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage(
+    'chatly-theme',
+    defaultDark ? 'dark' : 'light'
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    socket = io(process.env.REACT_APP_SOCKET_ROUTE);
+  }, []);
+
   const onSuccess = (data) => {
-    console.log('called');
     dispatch(setUser(data));
+
+    dispatch(getSocket(socket));
+
+    socket.emit('setup', data);
+    socket.on('connected', () => {
+      console.log(`${data.username} ${data.id} connected`);
+    });
     navigate('/');
   };
 
@@ -28,72 +53,21 @@ function App() {
     return <Loader />;
   }
 
-  // const [message,setMessage] = useState('');
-  // // const [room,setRoom] = useState('');
-  // const [recievedMessage,setRecievedMessage] = useState('')
-  // const [isData,setIsData] = useState(false)
-  // const [user,setUser] = useState('')
-
-  // const onChange = (e) => {
-  //   setMessage(e.target.value)
-
-  // }
-
-  // // const onChangeRoom = (e) => {
-  // //   setRoom(e.target.value);
-  // // }
-
-  // useEffect(() => {
-  // socket = io('http://localhost:5000');
-
-  // },[])
-
-  // useEffect(() => {
-
-  //   console.log('called');
-  //   socket.on('recieveMessage',(data) => {
-  //       console.log(data);
-  //       setRecievedMessage(data);
-  //   })
-  // },[isData])
-
-  // // const sendMessage = (e) => {
-  // //   e.preventDefault();
-  // //   socket.emit('sendMessage',message,room)
-  // //   setIsData(state => !state)
-  // // }
-
-  // // const joinRoom = (e) => {
-  // //   e.preventDefault();
-  // //   socket.emit('joinRoom',room)
-  // // }
-
-  // const getId = (e) => {
-  //   e.preventDefault();
-  //   setUser(e.target.id)
-  //   socket.emit('getUser',e.target.id);
-  // }
-
-  // const privateMessage = (e) => {
-  //   e.preventDefault();
-  //   setIsData(state => !state)
-  //   socket.emit('privateMessage',message,user)
-  //   console.log('called');
-  // }
-
   return (
-    <Routes>
-      <Route
-        path={Resource.Routes.HOME}
-        element={
-          <PrivateRoute>
-            <HomePage />
-          </PrivateRoute>
-        }
-      />
+    <div data-theme={theme}>
+      <Routes>
+        <Route
+          path={Resource.Routes.HOME}
+          element={
+            <PrivateRoute>
+              <HomePage setTheme={setTheme} />
+            </PrivateRoute>
+          }
+        />
 
-      <Route path={Resource.Routes.AUTH} element={<AuthPage />} />
-    </Routes>
+        <Route path={Resource.Routes.AUTH} element={<AuthPage />} />
+      </Routes>
+    </div>
   );
 }
 

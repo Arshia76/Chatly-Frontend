@@ -9,6 +9,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --background: #ffffff;
+  --background-side: #fafafa;
+  --chatUserBg: #fdfdfd;
+  --input-bg: #fdfdfd;
+  --input-border: #adadad5f;
+  --text-primary: black;
+  --text-secondary: #9193a3;
+  --accent: #258c60;
+}
+
+[data-theme='dark'] {
+  --background: #323644;
+  --background-side: #272a37;
+  --chatUserBg: #323644;
+  --input-bg: #424656;
+  --input-border: #2473bc;
+  --text-primary: white;
+  --text-secondary: #9193a3;
+  --accent: #258c60;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -16,22 +38,20 @@ code {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--background);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ADADAD;
+  background: #adadad;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--text-secondary);
 }
-
-

@@ -5,9 +5,9 @@ import File from '../components/File';
 import Resource from '../Resource';
 import styles from '../styles/pages/Auth.module.css';
 import { CSSTransition } from 'react-transition-group';
-import { replace, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useLogin, useRegister, useUser } from '../api/useAuth';
+import { useLogin, useRegister } from '../api/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/features/authSlice';
@@ -52,7 +52,7 @@ const Auth = () => {
     avatar: yup.string(),
   });
 
-  const onSubmitSignin = async (values) => {
+  const onSubmitSignin = (values) => {
     login(values);
   };
 
@@ -92,6 +92,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (isAuthenticated) navigate('/', { replace: true });
+    // eslint-disable-next-line
   }, [isAuthenticated]);
 
   if (isSuccessLogin || isSuccessRegister) {
