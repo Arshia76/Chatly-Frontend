@@ -63,14 +63,14 @@ const FileModal = () => {
   const onSendSuccess = (data) => {
     toast.success('پیام با موفقیت منتقل شد');
     dispatch(toggleModalFile());
-    socket.emit('new message', data);
+    socket?.emit('new message', data);
   };
 
   const onReplySuccess = (data) => {
     toast.success('پیام با موفقیت منتقل شد');
     dispatch(toggleModalFile());
     dispatch(removeMessageToReply());
-    socket.emit('new message', data);
+    socket?.emit('new message', data);
   };
 
   const onIncreseUnreadMessagesSuccess = () => {
@@ -113,7 +113,7 @@ const FileModal = () => {
 
   useEffect(() => {
     if ((!isLoadingSend && isIdleSend) || (!isLoadingReply && isIdleReply)) {
-      socket.on('message recieved', (recievedData) => {
+      socket?.on('message recieved', (recievedData) => {
         console.log('called sockeet');
         console.log(id);
         console.log(recievedData.chat._id);

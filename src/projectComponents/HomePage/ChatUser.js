@@ -7,6 +7,7 @@ import { getCurrentChat } from '../../store/features/chatSlice';
 import { getMessages } from '../../store/features/messageSlice';
 import { useSelector } from 'react-redux';
 import { useQueryClient } from 'react-query';
+import { GoPrimitiveDot } from 'react-icons/go';
 
 const ChatUser = (props) => {
   const queryClient = useQueryClient();
@@ -33,9 +34,22 @@ const ChatUser = (props) => {
     removeUnreadMessages({ chatId: props.id });
   };
   return (
-    <div className={styles.container} onClick={accessChat}>
+    <div
+      className={styles.container}
+      style={{ position: 'relative' }}
+      onClick={accessChat}
+    >
       <div className={styles.group}>
         <img src={props.img} alt={props.chatName} />
+        <span>
+          {props.isOnline && (
+            <GoPrimitiveDot
+              style={{ position: 'absolute', top: '0', right: '0' }}
+              size={20}
+              color='var(--text-secondary)'
+            />
+          )}
+        </span>
         <div className={styles.group2}>
           <h4>{props.username}</h4>
           {props.lastMsg && <p>{props.lastMsg}</p>}

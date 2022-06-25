@@ -13,24 +13,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/features/authSlice';
 import Loader from '../projectComponents/Loader';
 
-const Auth = () => {
+const Auth = (props) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [animationType, setAnimationType] = useState('signup');
+
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const {
-    mutate: login,
-    isLoading: isLoadingLogin,
-    isSuccess: isSuccessLogin,
-    data: LoginData,
-  } = useLogin();
-  const {
-    mutate: register,
-    isLoading: isLoadingRegister,
-    isSuccess: isSuccessRegister,
-    data: RegisterData,
-  } = useRegister();
+  const onLoginSuccess = (data) => {
+    dispatch(setUser(data));
+    // socket.emit('setup', data);
+    navigate(Resource.Routes.HOME);
+  };
+
+  const onRegisterSuccess = (data) => {
+    dispatch(setUser(data));
+    // socket.emit('setup', data);
+    navigate(Resource.Routes.HOME);
+  };
+
+  const { mutate: login, isLoading: isLoadingLogin } = useLogin(onLoginSuccess);
+  const { mutate: register, isLoading: isLoadingRegister } =
+    useRegister(onRegisterSuccess);
 
   const navigate = useNavigate();
 
@@ -80,25 +84,10 @@ const Auth = () => {
     onSubmit: onSubmitSignup,
   });
 
-  // const onSuccess = () => {
-  //   navigate('/', { replace: true });
-  // };
-
-  // const { isLoading } = useUser(onSuccess);
-
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
-
   useEffect(() => {
     if (isAuthenticated) navigate('/', { replace: true });
     // eslint-disable-next-line
   }, [isAuthenticated]);
-
-  if (isSuccessLogin || isSuccessRegister) {
-    dispatch(setUser(LoginData || RegisterData));
-    navigate(Resource.Routes.HOME);
-  }
 
   if (isLoadingLogin || isLoadingRegister) {
     return <Loader />;

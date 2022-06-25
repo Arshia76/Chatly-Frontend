@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../../styles/components/HomePage/Profile.module.css';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -16,18 +16,26 @@ import Dropdown from '../../components/Dropdown';
 import { logoutUser } from '../../store/features/authSlice';
 
 const Profile = (props) => {
-  const dot = document.getElementById('dot');
-
-  document.addEventListener('click', function (event) {
-    var isClickInsideElement = dot.contains(event.target);
-    if (!isClickInsideElement) {
-      setShow(false);
-    }
-  });
-
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const socket = useSelector((state) => state.chat.socket);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setShow(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <IoSettingsOutline
@@ -46,7 +54,7 @@ const Profile = (props) => {
         />
         <h4>{user.username || props.username}</h4>
       </div>
-      <Dropdown show={show} onClick={() => setShow(!show)}>
+      <Dropdown ref={ref} show={show} onClick={() => setShow(!show)}>
         <div className={styles.chatgroup}>
           <AiOutlinePlusCircle
             onClick={() => {
@@ -67,7 +75,10 @@ const Profile = (props) => {
             style={{ marginBottom: '15px', cursor: 'pointer' }}
           />
           <HiOutlineLogout
-            onClick={() => dispatch(logoutUser())}
+            onClick={() => {
+              socket.disconnect();
+              dispatch(logoutUser());
+            }}
             color='white'
             size={28}
             style={{ cursor: 'pointer' }}

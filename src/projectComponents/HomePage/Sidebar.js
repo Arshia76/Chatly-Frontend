@@ -13,6 +13,7 @@ const Sidebar = () => {
   const [filter, setFilter] = useState();
   const { data, isLoading } = useGetAllChats();
   const user = useSelector((state) => state.auth.user);
+  const onlineUsers = useSelector((state) => state.user.onlineUsers);
 
   return (
     <div className={styles.container}>
@@ -43,6 +44,12 @@ const Sidebar = () => {
                     <ChatUser
                       key={chat?._id}
                       id={chat?._id}
+                      isOnline={
+                        !chat.isGroupChat &&
+                        onlineUsers.some(
+                          (data) => data.id === chat?.users?.[0]?._id
+                        )
+                      }
                       img={
                         chat?.users?.[1]?.avatar ||
                         'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
@@ -79,6 +86,12 @@ const Sidebar = () => {
                   <ChatUser
                     key={chat?._id}
                     id={chat?._id}
+                    isOnline={
+                      !chat.isGroupChat &&
+                      onlineUsers.some(
+                        (data) => data.id === chat?.users?.[0]?._id
+                      )
+                    }
                     img={
                       chat.isGroupChat
                         ? 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'

@@ -1,17 +1,20 @@
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 
-const Dropdown = (props) => {
+const Dropdown = forwardRef((props, ref) => {
   return (
     <div className={styles.container}>
-      <BiDotsVerticalRounded
-        style={{ cursor: 'pointer' }}
-        size={30}
-        id={'dot'}
-        color='var(--text-primary)'
-        onClick={props.onClick}
-      />
+      <div ref={ref}>
+        <BiDotsVerticalRounded
+          style={{ cursor: 'pointer' }}
+          size={30}
+          id={'dot'}
+          color='var(--text-primary)'
+          onClick={props.onClick}
+        />
+      </div>
       <div
         className={styles.dropdown}
         style={{
@@ -24,7 +27,7 @@ const Dropdown = (props) => {
       </div>
     </div>
   );
-};
+});
 
 Dropdown.propTypes = {
   show: PropTypes.bool,

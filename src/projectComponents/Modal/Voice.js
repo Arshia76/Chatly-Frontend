@@ -55,8 +55,8 @@ const VoiceModal = () => {
   const onSendSuccess = (data) => {
     dispatch(toggleModalVoice());
 
-    socket.emit('new message', data);
-    socket.on('message recieved', (recievedData) => {
+    socket?.emit('new message', data);
+    socket?.on('message recieved', (recievedData) => {
       console.log('called sockeet');
       dispatch(add(recievedData));
     });
@@ -65,8 +65,8 @@ const VoiceModal = () => {
   const onReplySuccess = (data) => {
     dispatch(toggleModalVoice());
     dispatch(removeMessageToReply());
-    socket.emit('new message', data);
-    socket.on('message recieved', (recievedData) => {
+    socket?.emit('new message', data);
+    socket?.on('message recieved', (recievedData) => {
       console.log('called sockeet');
       dispatch(add(recievedData));
     });
@@ -101,7 +101,7 @@ const VoiceModal = () => {
 
   useEffect(() => {
     if ((!isLoadingSend && isIdleSend) || (!isLoadingReply && isIdleReply)) {
-      socket.on('message recieved', (recievedData) => {
+      socket?.on('message recieved', (recievedData) => {
         console.log('called sockeet');
         console.log(id);
         console.log(recievedData.chat._id);

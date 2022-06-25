@@ -55,7 +55,6 @@ export function useUser(onSuccess, onError) {
     onSuccess,
     onError,
     retry: false,
-    staleTime: 50000,
     refetchOnWindowFocus: false,
   });
 }

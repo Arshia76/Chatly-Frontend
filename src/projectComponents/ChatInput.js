@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BsEmojiSmile } from 'react-icons/bs';
 import { ImAttachment } from 'react-icons/im';
 import { FaTelegramPlane } from 'react-icons/fa';
@@ -44,12 +44,12 @@ const ChatInput = () => {
   const dispatch = useDispatch();
 
   const onReplySuccess = (data) => {
-    socket.emit('new message', data);
+    socket?.emit('new message', data);
     dispatch(removeMessageToReply());
   };
 
   const onSendSuccess = (data) => {
-    socket.emit('new message', data);
+    socket?.emit('new message', data);
   };
 
   const {
@@ -72,7 +72,7 @@ const ChatInput = () => {
 
   useEffect(() => {
     if ((!sendLoading && isIdleSend) || (!replyLoading && isIdleReply)) {
-      socket.on('message recieved', (recievedData) => {
+      socket?.on('message recieved', (recievedData) => {
         console.log('called sockeet');
         console.log(id);
         console.log(recievedData.chat._id);
@@ -208,14 +208,20 @@ const ChatInput = () => {
     },
   };
 
-  const emoji = document.getElementById('emoji');
+  const ref = useRef();
 
-  document.addEventListener('click', function (event) {
-    var isClickInsideElement = emoji.contains(event.target);
-    if (!isClickInsideElement) {
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
       setShowEmoji(false);
     }
-  });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -306,13 +312,14 @@ const ChatInput = () => {
       ) : null}
       <div className={styles.container}>
         <div className={styles.group}>
-          <BsEmojiSmile
-            id={'emoji'}
-            size={25}
-            color='var(--text-secondary)'
-            style={{ cursor: 'pointer' }}
-            onClick={() => setShowEmoji((state) => !state)}
-          />
+          <div ref={ref}>
+            <BsEmojiSmile
+              size={25}
+              color='var(--text-secondary)'
+              style={{ cursor: 'pointer' }}
+              onClick={() => setShowEmoji((state) => !state)}
+            />
+          </div>
           <input
             type='text'
             placeholder='تایپ کنید...'
@@ -337,20 +344,23 @@ const ChatInput = () => {
         <div className={styles.send}>
           <FaTelegramPlane size={25} color='#ffffff' onClick={send} />
         </div>
-        <Picker
-          set='apple'
-          showPreview={false}
-          showSkinTones={false}
-          i18n={i18n}
-          style={{
-            position: 'absolute',
-            right: 0,
-            bottom: '50px',
-            display: `${showEmoji ? 'block' : 'none'}`,
-          }}
-          sheetSize={32}
-          onClick={selectEmoji}
-        />
+
+        <div ref={ref}>
+          <Picker
+            set='apple'
+            showPreview={false}
+            showSkinTones={false}
+            i18n={i18n}
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: '50px',
+              display: `${showEmoji ? 'block' : 'none'}`,
+            }}
+            sheetSize={32}
+            onClick={selectEmoji}
+          />
+        </div>
       </div>
     </div>
   );
