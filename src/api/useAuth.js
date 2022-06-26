@@ -8,18 +8,13 @@ const axiosInstance = axios.create({
   },
 });
 
-const axiosWithAuth = axios.create({
-  baseURL: `${process.env.REACT_APP_API_ROUTE}`,
-  headers: {
-    'auth-token': `${localStorage.getItem('auth-token')}`,
-  },
-});
-
 const login = async (userData) => {
   const { data } = await axiosInstance.post(
     '/auth/login',
     JSON.stringify(userData)
   );
+  axios.defaults.headers.common['auth-token'] = data.token;
+  localStorage.setItem('auth-token', data.token);
   return data;
 };
 
@@ -28,11 +23,21 @@ const register = async (userData) => {
     '/auth/register',
     JSON.stringify(userData)
   );
+  axios.defaults.headers.common['auth-token'] = data.token;
+  localStorage.setItem('auth-token', data.token);
   return data;
 };
 
 const getUser = async () => {
-  const { data } = await axiosWithAuth.get('/auth/user');
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_ROUTE}/auth/user`,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
+  axios.defaults.headers.common['auth-token'] = data.token;
   return data;
 };
 

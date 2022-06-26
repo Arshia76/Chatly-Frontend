@@ -1,49 +1,79 @@
 import { useQuery, useMutation } from 'react-query';
 import axios from 'axios';
 
-const axiosWithAuth = axios.create({
-  baseURL: `${process.env.REACT_APP_API_ROUTE}`,
-  headers: {
-    'auth-token': `${localStorage.getItem('auth-token')}`,
-  },
-});
-
 const uploadFile = async (file) => {
-  const { data } = await axiosWithAuth.post(`/upload/message`, file, {});
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/upload/message`,
+    file,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 
 const uploadAudio = async (audioBlob) => {
-  const { data } = await axiosWithAuth.post(`/upload/audio`, audioBlob, {});
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/upload/audio`,
+    audioBlob,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 
 const uploadDocument = async (document) => {
-  const { data } = await axiosWithAuth.post(`/upload/document`, document, {});
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/upload/document`,
+    document,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 
 const downloadDocument = async (file) => {
-  const { data } = await axiosWithAuth.post('/download', JSON.stringify(file), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/download`,
+    JSON.stringify(file),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 
 const getChatMessages = async (id) => {
-  const { data } = await axiosWithAuth.get(`/message/messages/${id}`);
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_ROUTE}/message/messages/${id}`,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 
 const sendMessage = async (messageData) => {
-  const { data } = await axiosWithAuth.post(
-    '/message/send',
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/message/send`,
     JSON.stringify(messageData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -51,12 +81,13 @@ const sendMessage = async (messageData) => {
 };
 
 const reply = async ([messageData, messageId]) => {
-  const { data } = await axiosWithAuth.post(
-    `/message/reply/${messageId}`,
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/message/reply/${messageId}`,
     JSON.stringify(messageData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );

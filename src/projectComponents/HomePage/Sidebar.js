@@ -51,7 +51,7 @@ const Sidebar = () => {
                         )
                       }
                       img={
-                        chat?.users?.[1]?.avatar ||
+                        chat?.users?.[0]?.avatar ||
                         'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                       }
                       username={chat?.chatName}

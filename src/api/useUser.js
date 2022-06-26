@@ -1,15 +1,15 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-const axiosWithAuth = axios.create({
-  baseURL: `${process.env.REACT_APP_API_ROUTE}`,
-  headers: {
-    'auth-token': `${localStorage.getItem('auth-token')}`,
-  },
-});
-
 const searchUser = async (query) => {
-  const { data } = await axiosWithAuth.get(`/user/search?search=${query}`);
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_ROUTE}/user/search?search=${query}`,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
   return data;
 };
 

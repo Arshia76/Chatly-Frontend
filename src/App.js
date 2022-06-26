@@ -12,8 +12,6 @@ import useLocalStorage from 'use-local-storage';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-let socket;
-
 function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
@@ -25,10 +23,6 @@ function App() {
   const navigate = useNavigate();
 
   const onSuccess = (data) => {
-    // socket.emit('setup', data);
-    // socket.on('connected', () => {
-    //   console.log(`${data.username} ${data.id} connected`);
-    // });
     dispatch(setUser(data));
 
     navigate('/');

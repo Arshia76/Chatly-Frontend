@@ -77,6 +77,10 @@
   padding: 0;
 }
 
+.replyContainer h4 {
+  padding-top: 0;
+}
+
 .documentGroup {
   display: flex;
   align-items: center;

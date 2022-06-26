@@ -124,6 +124,7 @@ const FileModal = () => {
           });
         } else {
           dispatch(add(recievedData));
+          queryClient.invalidateQueries('chats');
         }
         console.log(recievedData);
       });

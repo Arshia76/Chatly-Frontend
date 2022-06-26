@@ -31,6 +31,7 @@ const ChatInput = () => {
   const socket = useSelector((state) => state.chat.socket);
   const messageToReply = useSelector((state) => state.message.messageToReply);
   const user = useSelector((state) => state.auth.user);
+  const inputRef = useRef();
 
   const onIncreseUnreadMessagesSuccess = () => {
     queryClient.invalidateQueries('chats');
@@ -71,6 +72,10 @@ const ChatInput = () => {
   }, [chat.id]);
 
   useEffect(() => {
+    inputRef?.current?.focus();
+  }, [messageToReply]);
+
+  useEffect(() => {
     if ((!sendLoading && isIdleSend) || (!replyLoading && isIdleReply)) {
       socket?.on('message recieved', (recievedData) => {
         console.log('called sockeet');
@@ -83,6 +88,7 @@ const ChatInput = () => {
           });
         } else {
           dispatch(add(recievedData));
+          queryClient.invalidateQueries('chats');
         }
         console.log(recievedData);
       });
@@ -100,6 +106,7 @@ const ChatInput = () => {
     });
 
   const selectEmoji = (emoji, e) => {
+    inputRef.current.focus();
     setText((state) => ({
       type: 'text',
       message: state?.message?.concat(emoji.native) || emoji.native,
@@ -146,6 +153,7 @@ const ChatInput = () => {
 
   const send = (e) => {
     e.preventDefault();
+    setShowEmoji(false);
     const data = {
       content: text.message,
       chatId: chat.id,
@@ -168,7 +176,7 @@ const ChatInput = () => {
   const onEnterPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-
+      setShowEmoji(false);
       const data = {
         content: text.message,
         chatId: chat.id,
@@ -317,10 +325,14 @@ const ChatInput = () => {
               size={25}
               color='var(--text-secondary)'
               style={{ cursor: 'pointer' }}
-              onClick={() => setShowEmoji((state) => !state)}
+              onClick={() => {
+                setShowEmoji((state) => !state);
+                inputRef.current.focus();
+              }}
             />
           </div>
           <input
+            ref={inputRef}
             type='text'
             placeholder='تایپ کنید...'
             value={text.message}

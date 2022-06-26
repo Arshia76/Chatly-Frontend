@@ -12,6 +12,7 @@ import { GoPrimitiveDot } from 'react-icons/go';
 const ChatUser = (props) => {
   const queryClient = useQueryClient();
   const socket = useSelector((state) => state.chat.socket);
+  const user = useSelector((state) => state.auth.user);
   const onSuccess = (data) => {
     dispatch(getMessages(data));
   };
@@ -70,7 +71,7 @@ ChatUser.propTypes = {
   username: PropTypes.string,
   lastMsg: PropTypes.string,
   time: PropTypes.string,
-  unreadMessages: PropTypes.number,
+  unreadMessages: PropTypes.array,
 };
 
 export default ChatUser;

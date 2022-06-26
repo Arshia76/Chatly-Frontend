@@ -22,13 +22,11 @@ const Auth = (props) => {
 
   const onLoginSuccess = (data) => {
     dispatch(setUser(data));
-    // socket.emit('setup', data);
     navigate(Resource.Routes.HOME);
   };
 
   const onRegisterSuccess = (data) => {
     dispatch(setUser(data));
-    // socket.emit('setup', data);
     navigate(Resource.Routes.HOME);
   };
 

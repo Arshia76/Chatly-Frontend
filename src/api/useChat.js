@@ -1,25 +1,25 @@
 import { useQuery, useMutation } from 'react-query';
 import axios from 'axios';
 
-const axiosWithAuth = axios.create({
-  baseURL: `${process.env.REACT_APP_API_ROUTE}`,
-  headers: {
-    'auth-token': `${localStorage.getItem('auth-token')}`,
-  },
-});
+const baseURL = process.env.REACT_APP_API_ROUTE;
 
 const getAllChats = async () => {
-  const { data } = await axiosWithAuth.get('/chat');
+  const { data } = await axios.get(`${baseURL}/chat`, {
+    headers: {
+      'auth-token': localStorage.getItem('auth-token'),
+    },
+  });
   return data;
 };
 
 const createChat = async (chatData) => {
-  const { data } = await axiosWithAuth.post(
-    '/chat/create',
+  const { data } = await axios.post(
+    `${baseURL}/chat/create`,
     JSON.stringify(chatData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -27,12 +27,13 @@ const createChat = async (chatData) => {
 };
 
 const createGroupChat = async (groupData) => {
-  const { data } = await axiosWithAuth.post(
-    '/chat/group/create',
+  const { data } = await axios.post(
+    `${baseURL}/chat/group/create`,
     JSON.stringify(groupData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -40,12 +41,13 @@ const createGroupChat = async (groupData) => {
 };
 
 const renameGroupChat = async (name) => {
-  const { data } = await axiosWithAuth.post(
-    '/chat/group/rename',
+  const { data } = await axios.post(
+    `${baseURL}/chat/group/rename`,
     JSON.stringify(name),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -53,12 +55,13 @@ const renameGroupChat = async (name) => {
 };
 
 const addToGroup = async (addData) => {
-  const { data } = await axiosWithAuth.post(
-    '/chat/group/add',
+  const { data } = await axios.post(
+    `/chat/group/add`,
     JSON.stringify(addData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -66,12 +69,13 @@ const addToGroup = async (addData) => {
 };
 
 const removeFromGroup = async (removeData) => {
-  const { data } = await axiosWithAuth.post(
-    '/chat/group/remove',
+  const { data } = await axios.post(
+    `${baseURL}/chat/group/remove`,
     JSON.stringify(removeData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -79,12 +83,13 @@ const removeFromGroup = async (removeData) => {
 };
 
 const increaseUnreadMessages = async (chatData) => {
-  const { data } = await axiosWithAuth.put(
-    '/chat/increase/UnreadMessages',
+  const { data } = await axios.put(
+    `${baseURL}/chat/increase/UnreadMessages`,
     JSON.stringify(chatData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
@@ -92,12 +97,13 @@ const increaseUnreadMessages = async (chatData) => {
 };
 
 const removeUnreadMessages = async (chatData) => {
-  const { data } = await axiosWithAuth.put(
-    '/chat/remove/UnreadMessages',
+  const { data } = await axios.put(
+    `${baseURL}/chat/remove/UnreadMessages`,
     JSON.stringify(chatData),
     {
       headers: {
         'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
       },
     }
   );
