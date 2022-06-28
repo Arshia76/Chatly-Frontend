@@ -110,3 +110,9 @@
 .replyDocumentGroup h4 {
   margin-left: 5px;
 }
+
+.replyContainer h4,
+.replyContainer audio,
+.replyContainer img {
+  cursor: pointer !important;
+}

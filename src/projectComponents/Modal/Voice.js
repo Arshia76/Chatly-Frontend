@@ -15,9 +15,10 @@ import {
 import { useIncreseUnreadMessages } from '../../api/useChat';
 import { BsFillStopCircleFill, BsRecordCircleFill } from 'react-icons/bs';
 import { FaMicrophoneAlt } from 'react-icons/fa';
-import moment from 'moment-jalali';
+import moment from 'jalali-moment';
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useQueryClient } from 'react-query';
+import Player from '../Player';
 
 let id;
 const VoiceModal = () => {
@@ -155,13 +156,7 @@ const VoiceModal = () => {
           <FaMicrophoneAlt size={55} color='#00B84A' />
         ) : (
           status === 'stopped' &&
-          mediaBlobUrl && (
-            <audio controls>
-              <source src={mediaBlobUrl} type='audio/ogg' />
-              <source src={mediaBlobUrl} type='audio/mpeg' />
-              امکان اجرای ویس برای مرورگر شما وجود ندارد
-            </audio>
-          )
+          mediaBlobUrl && <Player mediaUrl={mediaBlobUrl} />
         )}
         {status !== 'stopped' && (
           <div className={styles.group}>

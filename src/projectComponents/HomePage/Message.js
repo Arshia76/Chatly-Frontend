@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMessageToReply } from '../../store/features/messageSlice';
 import { CgFileDocument } from 'react-icons/cg';
 import { useDownloadDocument } from '../../api/useMessage';
+import Player from '../Player';
 
 const Message = (props) => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Message = (props) => {
               ) : props.replyTo.type === 'file' ? (
                 <>
                   <span style={{ marginBottom: '2px', display: 'block' }}>
-                    در پاسخ به{' '}
+                    در پاسخ به
                   </span>
                   <img
                     onClick={() =>
@@ -52,28 +53,17 @@ const Message = (props) => {
                   />
                 </>
               ) : props.replyTo.type === 'audio' ? (
-                <>
+                <div
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    props.moveToElement(props.replyTo.id || props.replyTo._id)
+                  }
+                >
                   <span style={{ marginBottom: '2px', display: 'block' }}>
                     در پاسخ به
                   </span>
-                  <audio
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                    controls
-                    controlsList='nodownload'
-                  >
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/ogg'
-                    />
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/mpeg'
-                    />
-                    امکان اجرای ویس برای مرورگر شما وجود ندارد
-                  </audio>
-                </>
+                  <Player message={props.message} />
+                </div>
               ) : props.replyTo.type === 'document' ? (
                 <>
                   <span style={{ marginBottom: '2px', display: 'block' }}>
@@ -166,28 +156,17 @@ const Message = (props) => {
                   />
                 </>
               ) : props.replyTo.type === 'audio' ? (
-                <>
+                <div
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    props.moveToElement(props.replyTo.id || props.replyTo._id)
+                  }
+                >
                   <span style={{ marginBottom: '10px', display: 'block' }}>
                     در پاسخ به
                   </span>
-                  <audio
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                    controls
-                    controlsList='nodownload'
-                  >
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/ogg'
-                    />
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/mpeg'
-                    />
-                    امکان اجرای ویس برای مرورگر شما وجود ندارد
-                  </audio>
-                </>
+                  <Player message={props.message} />
+                </div>
               ) : props.replyTo.type === 'document' ? (
                 <>
                   <span style={{ marginBottom: '2px', display: 'block' }}>
@@ -246,73 +225,24 @@ const Message = (props) => {
     );
   } else if (props.type === 'audio') {
     return (
-      <div
-        id={props.id}
-        onClick={props.onClick}
-        onDoubleClick={props.onDoubleClick}
-        style={{
-          justifyContent: `${props.fromSelf ? 'flex-start' : 'flex-end'}`,
-        }}
-        className={[styles.container, styles.container2].join(' ')}
-      >
-        <div className={styles.replyGroup}>
-          {props.replyTo && (
-            <div className={styles.replyContainer}>
-              {props.replyTo.type === 'text' ? (
-                <>
-                  <span style={{ marginBottom: '10px', display: 'block' }}>
-                    در پاسخ به
-                  </span>
-                  <h4
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                  >
-                    {props.replyTo.content}
-                  </h4>
-                </>
-              ) : props.replyTo.type === 'file' ? (
-                <>
-                  <span style={{ marginBottom: '10px', display: 'block' }}>
-                    در پاسخ به{' '}
-                  </span>
-                  <img
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                    src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                    alt='img'
-                  />
-                </>
-              ) : props.replyTo.type === 'audio' ? (
-                <>
-                  <span style={{ marginBottom: '10px', display: 'block' }}>
-                    در پاسخ به
-                  </span>
-                  <audio
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                    controls
-                    controlsList='nodownload'
-                  >
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/ogg'
-                    />
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/mpeg'
-                    />
-                    امکان اجرای ویس برای مرورگر شما وجود ندارد
-                  </audio>
-                </>
-              ) : props.replyTo.type === 'document' ? (
-                <>
-                  <span style={{ marginBottom: '2px', display: 'block' }}>
-                    در پاسخ به
-                  </span>
-                  <div className={styles.replyDocumentGroup}>
+      <>
+        <div
+          id={props.id}
+          onClick={props.onClick}
+          onDoubleClick={props.onDoubleClick}
+          style={{
+            justifyContent: `${props.fromSelf ? 'flex-start' : 'flex-end'}`,
+          }}
+          className={[styles.container, styles.container2].join(' ')}
+        >
+          <div className={styles.replyGroup}>
+            {props.replyTo && (
+              <div className={styles.replyContainer}>
+                {props.replyTo.type === 'text' ? (
+                  <>
+                    <span style={{ marginBottom: '10px', display: 'block' }}>
+                      در پاسخ به
+                    </span>
                     <h4
                       onClick={() =>
                         props.moveToElement(
@@ -322,51 +252,85 @@ const Message = (props) => {
                     >
                       {props.replyTo.content}
                     </h4>
-                    <CgFileDocument
-                      style={{ marginRight: '5px' }}
-                      size={25}
-                      color='var(--text-secondary)'
+                  </>
+                ) : props.replyTo.type === 'file' ? (
+                  <>
+                    <span style={{ marginBottom: '10px', display: 'block' }}>
+                      در پاسخ به{' '}
+                    </span>
+                    <img
+                      onClick={() =>
+                        props.moveToElement(
+                          props.replyTo.id || props.replyTo._id
+                        )
+                      }
+                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
+                      alt='img'
                     />
+                  </>
+                ) : props.replyTo.type === 'audio' ? (
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() =>
+                      props.moveToElement(props.replyTo.id || props.replyTo._id)
+                    }
+                  >
+                    <span style={{ marginBottom: '10px', display: 'block' }}>
+                      در پاسخ به
+                    </span>
+                    <Player message={props.message} />
                   </div>
-                </>
-              ) : null}
-            </div>
-          )}
-          <div className={styles.content}>
-            <img
-              className={styles.avatar}
-              src={props.avatar}
-              alt={props.username}
-            />
-            <div className={styles.group}>
-              <audio controls controlsList='nodownload'>
-                <source
-                  src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`}
-                  type='audio/ogg'
-                />
-                <source
-                  src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`}
-                  type='audio/mpeg'
-                />
-                امکان اجرای ویس برای مرورگر شما وجود ندارد
-              </audio>
-              <span>{props.time}</span>
+                ) : props.replyTo.type === 'document' ? (
+                  <>
+                    <span style={{ marginBottom: '2px', display: 'block' }}>
+                      در پاسخ به
+                    </span>
+                    <div className={styles.replyDocumentGroup}>
+                      <h4
+                        onClick={() =>
+                          props.moveToElement(
+                            props.replyTo.id || props.replyTo._id
+                          )
+                        }
+                      >
+                        {props.replyTo.content}
+                      </h4>
+                      <CgFileDocument
+                        style={{ marginRight: '5px' }}
+                        size={25}
+                        color='var(--text-secondary)'
+                      />
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            )}
+            <div className={styles.content}>
+              <img
+                className={styles.avatar}
+                src={props.avatar}
+                alt={props.username}
+              />
+              <div className={styles.group}>
+                <Player message={props.message} />
+                <span>{props.time}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className={styles.options}
-          style={{ display: `${props.show ? 'block' : 'none'}` }}
-        >
-          <h2
-            onClick={() => dispatch(setMessageToReply(props.data))}
-            className={styles.option}
+          <div
+            className={styles.options}
+            style={{ display: `${props.show ? 'block' : 'none'}` }}
           >
-            پاسخ
-          </h2>
-          <h2 className={styles.option}>ارسال</h2>
+            <h2
+              onClick={() => dispatch(setMessageToReply(props.data))}
+              className={styles.option}
+            >
+              پاسخ
+            </h2>
+            <h2 className={styles.option}>ارسال</h2>
+          </div>
         </div>
-      </div>
+      </>
     );
   } else if (props.type === 'document') {
     return (
@@ -409,28 +373,17 @@ const Message = (props) => {
                   />
                 </>
               ) : props.replyTo.type === 'audio' ? (
-                <>
+                <div
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    props.moveToElement(props.replyTo.id || props.replyTo._id)
+                  }
+                >
                   <span style={{ marginBottom: '2px', display: 'block' }}>
                     در پاسخ به
                   </span>
-                  <audio
-                    onClick={() =>
-                      props.moveToElement(props.replyTo.id || props.replyTo._id)
-                    }
-                    controls
-                    controlsList='nodownload'
-                  >
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/ogg'
-                    />
-                    <source
-                      src={`${process.env.REACT_APP_SOCKET_ROUTE}${props.replyTo.content}`}
-                      type='audio/mpeg'
-                    />
-                    امکان اجرای ویس برای مرورگر شما وجود ندارد
-                  </audio>
-                </>
+                  <Player message={props.message} />
+                </div>
               ) : props.replyTo.type === 'document' ? (
                 <>
                   <span style={{ marginBottom: '2px', display: 'block' }}>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header';
 import CurrentUser from '../HomePage/CurrentUser';
 import styles from '../../styles/components/HomePage/ChatContainer.module.css';
 import Message from './Message';
@@ -10,11 +9,13 @@ import Loader from '../Loader';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { toast } from 'react-toastify';
 import { search } from '../../store/features/messageSlice';
+import moment from 'jalali-moment';
 
 const ChatContainer = (props) => {
   const [filter, setFilter] = useState();
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
+  const [dates, setDates] = useState([]);
 
   const moveToElement = (id) => {
     console.log(id);
@@ -69,54 +70,101 @@ const ChatContainer = (props) => {
           filteredMessages &&
           filteredMessages
             .filter((message, index, array) => array.indexOf(message) === index)
-            .map((data) => {
+            .map((data, index) => {
+              // if (
+              //   !dates.includes(moment(data.createdAt).format('jMMM - jDD'))
+              // ) {
+              //   setDates((dates) => [
+              //     ...dates,
+              //     moment(data.createdAt).format('jMMM - jDD'),
+              //   ]);
+              // }
+              // const set = [...new Set(dates)];
               return (
-                <Message
-                  data={data}
-                  key={data._id}
-                  id={data._id}
-                  moveToElement={moveToElement}
-                  onClick={() => setId(null)}
-                  onDoubleClick={() => setId(data._id)}
-                  show={id === data._id}
-                  replyTo={data?.replyTo}
-                  message={data.content}
-                  time={data.time}
-                  type={data.type}
-                  username={data.sender.username}
-                  avatar={
-                    data.sender.avatar ||
-                    'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
-                  }
-                  fromSelf={data.sender._id === user.id}
-                />
+                <>
+                  {/* {set[index] && (
+                    <span
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontSize: '20px',
+                        color: 'var(--text-primary)',
+                        margin: '25px auto',
+                        backgroundColor: 'var(--background-side)',
+                        width: 'fit-content',
+                        padding: '10px',
+                        borderRadius: '5px',
+                      }}
+                    >
+                      {set[index]}
+                    </span>
+                  )} */}
+                  <Message
+                    data={data}
+                    key={data._id}
+                    id={data._id}
+                    moveToElement={moveToElement}
+                    onClick={() => setId(null)}
+                    onDoubleClick={() => setId(data._id)}
+                    show={id === data._id}
+                    replyTo={data?.replyTo}
+                    message={data.content}
+                    time={data.time}
+                    type={data.type}
+                    username={data.sender.username}
+                    avatar={
+                      data.sender.avatar ||
+                      'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                    }
+                    fromSelf={data.sender._id === user.id}
+                  />
+                </>
               );
             })
         ) : (
           messages &&
           messages
             .filter((message, index, array) => array.indexOf(message) === index)
-            .map((data) => {
+            .map((data, index) => {
               return (
-                <Message
-                  data={data}
-                  key={data._id}
-                  id={data._id}
-                  moveToElement={moveToElement}
-                  onClick={() => setId(null)}
-                  onDoubleClick={() => setId(data._id)}
-                  replyTo={data?.replyTo}
-                  show={id === data._id}
-                  message={data.content}
-                  time={data.time}
-                  type={data.type}
-                  username={data.sender.username}
-                  avatar={
-                    data.sender.avatar ||
-                    'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
-                  }
-                  fromSelf={data.sender._id === user.id}
-                />
+                <>
+                  {/* {set[index] && (
+                    <span
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontSize: '20px',
+                        color: 'var(--text-primary)',
+                        margin: '25px auto',
+                        backgroundColor: 'var(--background-side)',
+                        width: 'fit-content',
+                        padding: '10px',
+                        borderRadius: '5px',
+                      }}
+                    >
+                      {set[index]}
+                    </span>
+                  )} */}
+                  <Message
+                    data={data}
+                    key={data._id}
+                    id={data._id}
+                    moveToElement={moveToElement}
+                    onClick={() => setId(null)}
+                    onDoubleClick={() => setId(data._id)}
+                    replyTo={data?.replyTo}
+                    show={id === data._id}
+                    message={data.content}
+                    time={data.time}
+                    type={data.type}
+                    username={data.sender.username}
+                    avatar={
+                      data.sender.avatar ||
+                      'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                    }
+                    fromSelf={data.sender._id === user.id}
+                  />
+                </>
               );
             })
         )}

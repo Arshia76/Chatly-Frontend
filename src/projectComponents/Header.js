@@ -4,7 +4,7 @@ import styles from '../styles/components/Header.module.css';
 import { IoMoonOutline } from 'react-icons/io5';
 import { HiOutlineSun } from 'react-icons/hi';
 import { BsBell } from 'react-icons/bs';
-import moment from 'moment-jalali';
+import moment from 'jalali-moment';
 import useLocalStorage from 'use-local-storage';
 
 const Header = (props) => {

@@ -5,7 +5,7 @@ import ChatUser from './ChatUser';
 import Resource from '../../Resource';
 import styles from '../../styles/components/HomePage/Sidebar.module.css';
 import { useGetAllChats } from '../../api/useChat';
-import moment from 'moment-jalali';
+import moment from 'jalali-moment';
 import Loader from '../Loader';
 import { useSelector } from 'react-redux';
 

@@ -12,7 +12,7 @@ import {
   add,
   removeMessageToReply,
 } from '../store/features/messageSlice';
-import moment from 'moment-jalali';
+import moment from 'jalali-moment';
 import { useSendMessage, useReplyMessage } from '../api/useMessage';
 import { useIncreseUnreadMessages } from '../api/useChat';
 import { useSelector } from 'react-redux';
