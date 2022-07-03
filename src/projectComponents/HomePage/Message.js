@@ -4,12 +4,12 @@ import ModalImage from 'react-modal-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessageToReply } from '../../store/features/messageSlice';
 import { CgFileDocument } from 'react-icons/cg';
-import { useDownloadDocument } from '../../api/useMessage';
+// import { useDownloadDocument } from '../../api/useMessage';
 import Player from '../Player';
 
 const Message = (props) => {
   const dispatch = useDispatch();
-  const { mutate: downloadDocument } = useDownloadDocument();
+  // const { mutate: downloadDocument } = useDownloadDocument();
   const user = useSelector((state) => state.auth.user);
 
   if (props.type === 'text') {
@@ -412,9 +412,12 @@ const Message = (props) => {
           <div
             className={styles.content}
             onClick={() =>
-              downloadDocument({
-                file: `${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`,
-              })
+              // downloadDocument({
+              //   file: `${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`,
+              // })
+              window.open(
+                `${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`
+              )
             }
           >
             <img

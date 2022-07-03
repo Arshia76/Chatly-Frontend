@@ -96,6 +96,7 @@ const CurrentUser = (props) => {
         >
           {width <= 900 && (
             <GiHamburgerMenu
+              color='var(--text-primary)'
               size={20}
               onClick={() => dispatch(toggleSidebarOpen())}
             />
