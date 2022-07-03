@@ -1,8 +1,8 @@
 .container {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 1px;
   border-bottom: 1px solid var(--text-secondary);
   margin-top: 20px;
 }

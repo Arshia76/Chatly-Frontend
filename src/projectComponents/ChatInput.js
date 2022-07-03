@@ -24,6 +24,7 @@ import { useQueryClient } from 'react-query';
 import { FaMicrophone } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { CgFileDocument } from 'react-icons/cg';
+import useLocalStorage from 'use-local-storage';
 
 let id;
 const ChatInput = () => {
@@ -32,6 +33,8 @@ const ChatInput = () => {
   const messageToReply = useSelector((state) => state.message.messageToReply);
   const user = useSelector((state) => state.auth.user);
   const inputRef = useRef();
+
+  const [theme] = useLocalStorage('chatly-theme');
 
   const onIncreseUnreadMessagesSuccess = () => {
     queryClient.invalidateQueries('chats');
@@ -364,12 +367,15 @@ const ChatInput = () => {
             showSkinTones={false}
             i18n={i18n}
             style={{
+              background: 'var(--background-side)',
+              color: 'var(--text-primary)',
+
               position: 'absolute',
               right: 0,
               bottom: '50px',
               display: `${showEmoji ? 'block' : 'none'}`,
             }}
-            sheetSize={32}
+            // sheetSize={width < 768 ? 16 : 32}
             onClick={selectEmoji}
           />
         </div>

@@ -4,6 +4,7 @@ import authReducer from './features/authSlice';
 import chatReducer from './features/chatSlice';
 import modalReducer from './features/modalSlice';
 import userReducer from './features/userSlice';
+import drawerReducer from './features/drawerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     chat: chatReducer,
     modal: modalReducer,
     user: userReducer,
+    drawer: drawerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

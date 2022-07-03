@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styles from './index.module.css';
 import './index.module.css';
 import PropTypes from 'prop-types';
 
-const Input = (props) => {
+const Input = forwardRef((props, ref) => {
   const fieldClasses = [styles.InputField];
   const groupClasses = [styles.InputGroup];
   const classes = [styles.Input];
@@ -33,6 +33,7 @@ const Input = (props) => {
               readOnly={props.readOnly}
               placeholder={props.placeholder}
               onChange={props.onChange}
+              ref={ref}
               onBlur={props.onBlur}
               onFocus={props.onFocus}
               onInput={props.onInput}
@@ -59,6 +60,7 @@ const Input = (props) => {
               style={props.style}
               className={`Input ${props.className} ${props.error && 'error'}`}
               draggable={false}
+              ref={ref}
               disabled={props.disabled}
               name={props.name}
               onInput={props.onInput}
@@ -71,7 +73,7 @@ const Input = (props) => {
       {props.error && <h4 className={styles.error}>{props.error}</h4>}
     </>
   );
-};
+});
 
 Input.defaultProps = {
   type: null,

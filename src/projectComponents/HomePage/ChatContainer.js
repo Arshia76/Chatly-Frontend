@@ -9,7 +9,6 @@ import Loader from '../Loader';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { toast } from 'react-toastify';
 import { search } from '../../store/features/messageSlice';
-import moment from 'jalali-moment';
 
 const ChatContainer = (props) => {
   const [filter, setFilter] = useState();
@@ -70,7 +69,7 @@ const ChatContainer = (props) => {
           filteredMessages &&
           filteredMessages
             .filter((message, index, array) => array.indexOf(message) === index)
-            .map((data, index) => {
+            .map((data) => {
               // if (
               //   !dates.includes(moment(data.createdAt).format('jMMM - jDD'))
               // ) {

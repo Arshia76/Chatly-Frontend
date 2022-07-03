@@ -121,3 +121,24 @@ input[type='range']::-moz-range-thumb {
 input[type='range']:focus::-moz-range-track {
   background: #ccc;
 }
+
+.emoji-mart .emoji-mart-category-label span {
+  background-color: var(--background-side) !important;
+  /* color: var(--text-primary) !important; */
+  text-align: right !important;
+}
+
+.emoji-mart input {
+  border-color: var(--input-border) !important;
+}
+
+.emoji-mart .emoji-mart-scroll button:hover {
+  background: transparent !important;
+  color: transparent !important;
+}
+
+@media (max-width: 900px) {
+  input[type='range'] {
+    width: 100px;
+  }
+}

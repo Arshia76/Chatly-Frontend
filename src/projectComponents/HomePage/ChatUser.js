@@ -8,11 +8,12 @@ import { getMessages } from '../../store/features/messageSlice';
 import { useSelector } from 'react-redux';
 import { useQueryClient } from 'react-query';
 import { GoPrimitiveDot } from 'react-icons/go';
+import { toggleSidebarOpen } from '../../store/features/drawerSlice';
 
 const ChatUser = (props) => {
   const queryClient = useQueryClient();
   const socket = useSelector((state) => state.chat.socket);
-  const user = useSelector((state) => state.auth.user);
+
   const onSuccess = (data) => {
     dispatch(getMessages(data));
   };
@@ -33,6 +34,7 @@ const ChatUser = (props) => {
     refetch(props.id);
     socket.emit('join chat', props.id);
     removeUnreadMessages({ chatId: props.id });
+    dispatch(toggleSidebarOpen());
   };
   return (
     <div

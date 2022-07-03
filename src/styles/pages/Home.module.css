@@ -5,3 +5,9 @@
   height: 100vh;
   overflow: hidden;
 }
+
+@media (max-width: 900px) {
+  .container {
+    display: block;
+  }
+}
