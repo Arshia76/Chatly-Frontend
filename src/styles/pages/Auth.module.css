@@ -175,6 +175,10 @@
     border-radius: 10px 10px 0 0;
   }
 
+  .InputContainer {
+    padding: 0 !important;
+  }
+
   .InputContainer.SignUpContainer {
     grid-template-columns: 1fr;
   }
