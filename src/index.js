@@ -25,7 +25,7 @@ root.render(
         <Router>
           <App />
         </Router>
-        <ToastContainer style={{ fontSize: '16px' }} />
+        <ToastContainer style={{ fontSize: '16px', zIndex: '99999' }} />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Provider>

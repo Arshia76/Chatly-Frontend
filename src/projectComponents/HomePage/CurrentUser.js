@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import Input from '../../components/Input';
 import Resource from '../../Resource';
 import { BsCameraVideo } from 'react-icons/bs';
-import { toggleModalVideoCall } from '../../store/features/modalSlice';
+import {
+  toggleModalGroupProfile,
+  toggleModalVideoCall,
+} from '../../store/features/modalSlice';
 import useWindowSize from '../../hooks/useWindowSize';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { toggleSidebarOpen } from '../../store/features/drawerSlice';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { IoMdClose, IoIosSearch } from 'react-icons/io';
 
 const CurrentUser = (props) => {
@@ -22,6 +24,12 @@ const CurrentUser = (props) => {
   useEffect(() => {
     searchRef.current?.focus();
   }, [inSearchOpen]);
+
+  const openModal = () => {
+    if (chat.isGroupChat) {
+      dispatch(toggleModalGroupProfile());
+    }
+  };
 
   if (inSearchOpen) {
     return (
@@ -63,7 +71,11 @@ const CurrentUser = (props) => {
               cursor='pointer'
             />
           )}
-          <div className={styles.group}>
+          <div
+            className={styles.group}
+            style={{ cursor: 'pointer' }}
+            onClick={openModal}
+          >
             <img src={chat.img} alt={chat.username} />
             <h4>{chat.username}</h4>
           </div>
@@ -96,6 +108,7 @@ const CurrentUser = (props) => {
         >
           {width <= 900 && (
             <GiHamburgerMenu
+              cursor={'pointer'}
               color='var(--text-primary)'
               size={20}
               onClick={() => dispatch(toggleSidebarOpen())}

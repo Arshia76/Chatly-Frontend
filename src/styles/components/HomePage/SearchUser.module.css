@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 8px 15px;
   background-color: #fdfdfd;
   border-bottom: 1px solid rgba(0, 0, 0, 0.198);
   cursor: pointer;
   margin: 0 6px;
   border-radius: 5px;
+  margin-top: 10px;
 }
 
 .container .group {

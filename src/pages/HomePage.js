@@ -4,6 +4,7 @@ import Sidebar from '../projectComponents/HomePage/Sidebar';
 import FileModal from '../projectComponents/Modal/File';
 import SingleChatModal from '../projectComponents/Modal/SingleChat';
 import GroupChatModal from '../projectComponents/Modal/GroupChat';
+import GroupProfileModal from '../projectComponents/Modal/GroupProfile';
 import VideoChatModal from '../projectComponents/Modal/VideoCall';
 import ProfileModal from '../projectComponents/Modal/Profile';
 import styles from '../styles/pages/Home.module.css';
@@ -46,6 +47,7 @@ const HomePage = (props) => {
       <VoiceModal />
       <ProfileModal />
       <SettingModal setTheme={props.setTheme} />
+      <GroupProfileModal />
     </main>
   );
 };

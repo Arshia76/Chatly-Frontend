@@ -9,6 +9,7 @@ const initialState = {
   modalSetting: false,
   modalProfile: false,
   modalChatInfo: false,
+  modalGroupProfile: false,
 };
 
 export const modalSlice = createSlice({
@@ -20,6 +21,9 @@ export const modalSlice = createSlice({
     },
     toggleModalGroupChat: (state) => {
       state.modalGroupChat = !state.modalGroupChat;
+    },
+    toggleModalGroupProfile: (state) => {
+      state.modalGroupProfile = !state.modalGroupProfile;
     },
     toggleModalFile: (state) => {
       state.modalFile = !state.modalFile;
@@ -45,6 +49,7 @@ export const modalSlice = createSlice({
 export const {
   toggleModalSingleChat,
   toggleModalGroupChat,
+  toggleModalGroupProfile,
   toggleModalFile,
   toggleModalVideoCall,
   toggleModalVoice,

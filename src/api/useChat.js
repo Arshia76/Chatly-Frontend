@@ -41,7 +41,7 @@ const createGroupChat = async (groupData) => {
 };
 
 const renameGroupChat = async (name) => {
-  const { data } = await axios.post(
+  const { data } = await axios.put(
     `${baseURL}/chat/group/rename`,
     JSON.stringify(name),
     {
@@ -55,8 +55,8 @@ const renameGroupChat = async (name) => {
 };
 
 const addToGroup = async (addData) => {
-  const { data } = await axios.post(
-    `/chat/group/add`,
+  const { data } = await axios.put(
+    `${baseURL}/chat/group/add`,
     JSON.stringify(addData),
     {
       headers: {
@@ -69,7 +69,7 @@ const addToGroup = async (addData) => {
 };
 
 const removeFromGroup = async (removeData) => {
-  const { data } = await axios.post(
+  const { data } = await axios.put(
     `${baseURL}/chat/group/remove`,
     JSON.stringify(removeData),
     {

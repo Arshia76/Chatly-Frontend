@@ -64,6 +64,7 @@ const Sidebar = () => {
                       <ChatUser
                         key={chat?._id}
                         id={chat?._id}
+                        users={chat.isGroupChat && chat?.users}
                         isOnline={
                           !chat.isGroupChat &&
                           onlineUsers.some(
@@ -74,7 +75,11 @@ const Sidebar = () => {
                           chat?.users?.[0]?.avatar ||
                           'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                         }
-                        username={chat?.chatName}
+                        username={
+                          chat?.isGroupChat
+                            ? chat?.chatName
+                            : chat?.users[0].username
+                        }
                         lastMsg={
                           chat?.latestMessage?.type === 'text'
                             ? chat?.latestMessage?.content
@@ -97,6 +102,7 @@ const Sidebar = () => {
                             array.indexOf(message) === index
                         )}
                         isGroupChat={chat?.isGroupChat}
+                        groupAdmin={chat?.groupAdmin}
                       />
                     );
                   })
@@ -106,6 +112,7 @@ const Sidebar = () => {
                     <ChatUser
                       key={chat?._id}
                       id={chat?._id}
+                      users={chat.isGroupChat && chat?.users}
                       isOnline={
                         !chat.isGroupChat &&
                         onlineUsers.some(
@@ -145,6 +152,7 @@ const Sidebar = () => {
                           array.indexOf(message) === index
                       )}
                       isGroupChat={chat?.isGroupChat}
+                      groupAdmin={chat?.groupAdmin}
                     />
                   );
                 })}

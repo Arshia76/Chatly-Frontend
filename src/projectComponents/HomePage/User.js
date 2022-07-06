@@ -1,42 +1,29 @@
 import { useRef } from 'react';
 import styles from '../../styles/components/HomePage/SearchUser.module.css';
 import PropTypes from 'prop-types';
-import { MdPersonAddAlt1 } from 'react-icons/md';
-import { useCreateChat, useAddToGroupChat } from '../../api/useChat';
+import { IoPersonRemove } from 'react-icons/io5';
+import { useRemoveFromGroupChat } from '../../api/useChat';
 import { useQueryClient } from 'react-query';
-import { toggleModalSingleChat } from '../../store/features/modalSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToBadgeList, getCurrentChat } from '../../store/features/chatSlice';
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'jalali-moment';
+import { toast } from 'react-toastify';
+import { getCurrentChat } from '../../store/features/chatSlice';
 
-const SearchUser = (props) => {
-  const toastRef = useRef();
+const User = (props) => {
   const queryClient = useQueryClient();
-  const modal = useSelector((state) => state.modal.modalSingleChat);
-  const modalAddGroup = useSelector((state) => state.modal.modalGroupProfile);
   const chat = useSelector((state) => state.chat.currentChat);
   const onlineUsers = useSelector((state) => state.user.onlineUsers);
   const user = useSelector((state) => state.auth.user);
+  const toastRef = useRef();
   const dispatch = useDispatch();
 
   const notify = () => (toastRef.current = toast('لطفا منتظر باشید.'));
 
   const dismiss = () => toast.dismiss(toastRef.current);
 
-  const onAccessChatSuccess = () => {
+  const onRemoveFromGroupChatSuccess = (chat) => {
+    toast.success('کاربر با موفقیت حذف گردید.');
     queryClient.invalidateQueries('chats');
-    dispatch(toggleModalSingleChat());
-    toast.success('چت با موفقیت ایجاد گردید');
-    props.onClose();
-  };
-  const onAccessChatError = (error) => {
-    console.log(error);
-    toast.success('ایجاد چت با خطا مواجه شد');
-  };
-
-  const onAddToGroupChatSuccess = (chat) => {
-    toast.success('کاربر با موفقیت اضافه شد.');
     dismiss();
 
     const data = {
@@ -78,32 +65,27 @@ const SearchUser = (props) => {
     dispatch(getCurrentChat(data));
   };
 
-  const onAddToGroupChatError = (err) => {
-    toast.error(err.response.data.message || 'خطا در افزودن کاربر');
+  const onRemoveFromGroupChatFail = (err) => {
+    toast.error(err.response.data.message || 'خطا در حذف کاربر');
     dismiss();
   };
 
-  const { mutate } = useCreateChat(onAccessChatSuccess, onAccessChatError);
-  const { mutate: addToGroup, isLoading: isLoadingAdd } = useAddToGroupChat(
-    onAddToGroupChatSuccess,
-    onAddToGroupChatError
+  const { mutate, isLoading } = useRemoveFromGroupChat(
+    onRemoveFromGroupChatSuccess,
+    onRemoveFromGroupChatFail
   );
 
   const onItemClick = () => {
-    if (modal) {
-      mutate({ userId: props.id });
-    } else if (modalAddGroup) {
+    if (chat?.groupAdmin?._id === user.id) {
       const data = {
-        userId: props.id,
         chatId: chat.id,
+        userId: props.id,
       };
-      addToGroup(data);
-    } else {
-      dispatch(addToBadgeList(props));
+      mutate(data);
     }
   };
 
-  if (isLoadingAdd) {
+  if (isLoading) {
     notify();
   }
 
@@ -113,14 +95,16 @@ const SearchUser = (props) => {
         <img src={props.img} alt={props.username} />
         <h4>{props.username}</h4>
       </div>
-      <MdPersonAddAlt1 size={25} color='grey' />
+      {chat?.groupAdmin?._id === user.id && (
+        <IoPersonRemove size={25} color='grey' />
+      )}
     </div>
   );
 };
 
-SearchUser.propTypes = {
+User.propTypes = {
   img: PropTypes.string,
   username: PropTypes.string,
 };
 
-export default SearchUser;
+export default User;

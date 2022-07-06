@@ -14,6 +14,7 @@ import {
 } from '../../store/features/modalSlice';
 import Dropdown from '../../components/Dropdown';
 import { logoutUser } from '../../store/features/authSlice';
+import { getCurrentChat } from '../../store/features/chatSlice';
 
 const Profile = (props) => {
   const [show, setShow] = useState(false);
@@ -62,7 +63,7 @@ const Profile = (props) => {
               setShow(false);
             }}
             size={28}
-            color='white'
+            color='var(--text-secondary)'
             style={{ marginBottom: '15px', cursor: 'pointer' }}
           />
           <AiOutlineUsergroupAdd
@@ -70,7 +71,7 @@ const Profile = (props) => {
               dispatch(toggleModalGroupChat());
               setShow(false);
             }}
-            color='white'
+            color='var(--text-secondary)'
             size={30}
             style={{ marginBottom: '15px', cursor: 'pointer' }}
           />
@@ -78,8 +79,9 @@ const Profile = (props) => {
             onClick={() => {
               socket.disconnect();
               dispatch(logoutUser());
+              dispatch(getCurrentChat({}));
             }}
-            color='white'
+            color='var(--text-secondary)'
             size={28}
             style={{ cursor: 'pointer' }}
           />

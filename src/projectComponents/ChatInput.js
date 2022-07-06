@@ -356,8 +356,8 @@ const ChatInput = () => {
           color='var(--text-secondary)'
           style={{ cursor: 'pointer' }}
         />
-        <div className={styles.send}>
-          <FaTelegramPlane size={25} color='#ffffff' onClick={send} />
+        <div className={styles.send} onClick={send}>
+          <FaTelegramPlane size={20} color='#ffffff' />
         </div>
 
         <div ref={ref}>

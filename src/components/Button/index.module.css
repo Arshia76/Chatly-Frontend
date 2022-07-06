@@ -31,6 +31,22 @@
   border-radius: 20px;
 }
 
+.Button.PerformBtn {
+  background: #3aa9ab;
+  color: white;
+  width: 150px;
+  border: 2px solid white;
+  padding: 5px;
+  font-size: 1.6em;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.Button.PerformBtn img {
+  width: 40px !important;
+  height: 27px !important;
+}
+
 .Button.SocialBtn {
   margin: 0 10px;
 }

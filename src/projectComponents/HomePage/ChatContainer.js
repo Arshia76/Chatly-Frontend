@@ -62,26 +62,33 @@ const ChatContainer = (props) => {
     <div className={styles.container}>
       {/* <Header setTheme={props.setTheme} /> */}
       <CurrentUser filter={filter} setFilter={setFilter} />
-      <ScrollToBottom checkInterval={100} className={styles.messageContainer}>
-        {isLoading ? (
-          <Loader />
-        ) : filter ? (
-          filteredMessages &&
-          filteredMessages
-            .filter((message, index, array) => array.indexOf(message) === index)
-            .map((data) => {
-              // if (
-              //   !dates.includes(moment(data.createdAt).format('jMMM - jDD'))
-              // ) {
-              //   setDates((dates) => [
-              //     ...dates,
-              //     moment(data.createdAt).format('jMMM - jDD'),
-              //   ]);
-              // }
-              // const set = [...new Set(dates)];
-              return (
-                <>
-                  {/* {set[index] && (
+      {Object.keys(chat).length > 0 && (
+        <>
+          <ScrollToBottom
+            checkInterval={100}
+            className={styles.messageContainer}
+          >
+            {isLoading ? (
+              <Loader />
+            ) : filter ? (
+              filteredMessages &&
+              filteredMessages
+                .filter(
+                  (message, index, array) => array.indexOf(message) === index
+                )
+                .map((data) => {
+                  // if (
+                  //   !dates.includes(moment(data.createdAt).format('jMMM - jDD'))
+                  // ) {
+                  //   setDates((dates) => [
+                  //     ...dates,
+                  //     moment(data.createdAt).format('jMMM - jDD'),
+                  //   ]);
+                  // }
+                  // const set = [...new Set(dates)];
+                  return (
+                    <>
+                      {/* {set[index] && (
                     <span
                       style={{
                         display: 'flex',
@@ -98,36 +105,38 @@ const ChatContainer = (props) => {
                       {set[index]}
                     </span>
                   )} */}
-                  <Message
-                    data={data}
-                    key={data._id}
-                    id={data._id}
-                    moveToElement={moveToElement}
-                    onClick={() => setId(null)}
-                    onDoubleClick={() => setId(data._id)}
-                    show={id === data._id}
-                    replyTo={data?.replyTo}
-                    message={data.content}
-                    time={data.time}
-                    type={data.type}
-                    username={data.sender.username}
-                    avatar={
-                      data.sender.avatar ||
-                      'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
-                    }
-                    fromSelf={data.sender._id === user.id}
-                  />
-                </>
-              );
-            })
-        ) : (
-          messages &&
-          messages
-            .filter((message, index, array) => array.indexOf(message) === index)
-            .map((data, index) => {
-              return (
-                <>
-                  {/* {set[index] && (
+                      <Message
+                        data={data}
+                        key={data._id}
+                        id={data._id}
+                        moveToElement={moveToElement}
+                        onClick={() => setId(null)}
+                        onDoubleClick={() => setId(data._id)}
+                        show={id === data._id}
+                        replyTo={data?.replyTo}
+                        message={data.content}
+                        time={data.time}
+                        type={data.type}
+                        username={data.sender.username}
+                        avatar={
+                          data.sender.avatar ||
+                          'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                        }
+                        fromSelf={data.sender._id === user.id}
+                      />
+                    </>
+                  );
+                })
+            ) : (
+              messages &&
+              messages
+                .filter(
+                  (message, index, array) => array.indexOf(message) === index
+                )
+                .map((data, index) => {
+                  return (
+                    <>
+                      {/* {set[index] && (
                     <span
                       style={{
                         display: 'flex',
@@ -144,31 +153,33 @@ const ChatContainer = (props) => {
                       {set[index]}
                     </span>
                   )} */}
-                  <Message
-                    data={data}
-                    key={data._id}
-                    id={data._id}
-                    moveToElement={moveToElement}
-                    onClick={() => setId(null)}
-                    onDoubleClick={() => setId(data._id)}
-                    replyTo={data?.replyTo}
-                    show={id === data._id}
-                    message={data.content}
-                    time={data.time}
-                    type={data.type}
-                    username={data.sender.username}
-                    avatar={
-                      data.sender.avatar ||
-                      'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
-                    }
-                    fromSelf={data.sender._id === user.id}
-                  />
-                </>
-              );
-            })
-        )}
-      </ScrollToBottom>
-      <ChatInput />
+                      <Message
+                        data={data}
+                        key={data._id}
+                        id={data._id}
+                        moveToElement={moveToElement}
+                        onClick={() => setId(null)}
+                        onDoubleClick={() => setId(data._id)}
+                        replyTo={data?.replyTo}
+                        show={id === data._id}
+                        message={data.content}
+                        time={data.time}
+                        type={data.type}
+                        username={data.sender.username}
+                        avatar={
+                          data.sender.avatar ||
+                          'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                        }
+                        fromSelf={data.sender._id === user.id}
+                      />
+                    </>
+                  );
+                })
+            )}
+          </ScrollToBottom>
+          <ChatInput />
+        </>
+      )}
     </div>
   );
 };

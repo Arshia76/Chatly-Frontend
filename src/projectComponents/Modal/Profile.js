@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import styles from '../../styles/components/Modal/Profile.module.css';
@@ -75,7 +74,7 @@ const SingleChatModal = () => {
           onChange={profileForm.handleChange}
           placeholder={'نام کاربری'}
         />
-        <Button className='ProfileBtn' title='اعمال تغییرات' />
+        <Button className='PerformBtn' title='اعمال تغییرات' />
         <h4>تغییر رمز عبور</h4>
         <Input
           fieldClassName={'ProfileField'}
@@ -93,7 +92,7 @@ const SingleChatModal = () => {
           onChange={profileForm.handleChange}
           placeholder={'رمز عبور جدید'}
         />
-        <Button className='ProfileBtn' title='تغییر رمز عبور' />
+        <Button className='PerformBtn' title='تغییر رمز عبور' />
       </form>
     </Modal>
   );
