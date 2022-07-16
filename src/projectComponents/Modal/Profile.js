@@ -95,11 +95,11 @@ const SingleChatModal = () => {
     password: yup
       .string()
       .min(6, 'رمز عبور حداقل 6 کاراکتر می‌باشد')
-      .required('پسورد جدید را وارد نمایید'),
+      .required('پسورد فعلی را وارد نمایید'),
     newPassword: yup
       .string()
       .min(6, 'رمز عبور حداقل 6 کاراکتر می‌باشد')
-      .required('پسورد فعلی را وارد نمایید'),
+      .required('پسورد جدید را وارد نمایید'),
   });
 
   const isOpen = useSelector((state) => state.modal.modalProfile);
