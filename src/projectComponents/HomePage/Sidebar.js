@@ -58,7 +58,11 @@ const Sidebar = () => {
             {filter
               ? data &&
                 data
-                  .filter((chat) => chat.chatName.includes(filter))
+                  .filter((chat) =>
+                    chat.isGroupChat
+                      ? chat.chatName.includes(filter)
+                      : chat.users[0].username.includes(filter)
+                  )
                   .map((chat) => {
                     return (
                       <ChatUser
@@ -72,8 +76,11 @@ const Sidebar = () => {
                           )
                         }
                         img={
-                          chat?.users?.[0]?.avatar ||
-                          'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          chat.isGroupChat
+                            ? 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                            : chat?.users[0].avatar
+                            ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users[0].avatar}`
+                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                         }
                         username={
                           chat?.isGroupChat
@@ -122,8 +129,9 @@ const Sidebar = () => {
                       img={
                         chat.isGroupChat
                           ? 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
-                          : chat?.users?.[0]?.avatar ||
-                            'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          : chat?.users[0].avatar
+                          ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users[0].avatar}`
+                          : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                       }
                       username={
                         chat?.isGroupChat

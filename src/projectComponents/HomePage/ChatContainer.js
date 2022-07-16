@@ -119,8 +119,9 @@ const ChatContainer = (props) => {
                         type={data.type}
                         username={data.sender.username}
                         avatar={
-                          data.sender.avatar ||
-                          'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          data.sender.avatar
+                            ? `${process.env.REACT_APP_SOCKET_ROUTE}${data.sender.avatar}`
+                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                         }
                         fromSelf={data.sender._id === user.id}
                       />
@@ -167,8 +168,9 @@ const ChatContainer = (props) => {
                         type={data.type}
                         username={data.sender.username}
                         avatar={
-                          data.sender.avatar ||
-                          'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          data.sender.avatar
+                            ? `${process.env.REACT_APP_SOCKET_ROUTE}${data.sender.avatar}`
+                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                         }
                         fromSelf={data.sender._id === user.id}
                       />

@@ -50,7 +50,11 @@ const Profile = (props) => {
         onClick={() => dispatch(toggleModalProfile())}
       >
         <img
-          src={user.avatar || props.profileImg}
+          src={
+            user.avatar
+              ? `${process.env.REACT_APP_SOCKET_ROUTE}${user.avatar}`
+              : props.profileImg
+          }
           alt={user.username || props.username}
         />
         <h4>{user.username || props.username}</h4>

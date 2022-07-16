@@ -6,6 +6,7 @@ import { Picker } from 'emoji-mart-virtualized';
 import { useFilePicker } from 'use-file-picker';
 import 'emoji-mart-virtualized/css/emoji-mart.css';
 import styles from '../styles/components/ChatInput.module.css';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import {
   getFile,
@@ -24,7 +25,6 @@ import { useQueryClient } from 'react-query';
 import { FaMicrophone } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { CgFileDocument } from 'react-icons/cg';
-import useLocalStorage from 'use-local-storage';
 
 let id;
 const ChatInput = () => {
@@ -33,8 +33,6 @@ const ChatInput = () => {
   const messageToReply = useSelector((state) => state.message.messageToReply);
   const user = useSelector((state) => state.auth.user);
   const inputRef = useRef();
-
-  const [theme] = useLocalStorage('chatly-theme');
 
   const onIncreseUnreadMessagesSuccess = () => {
     queryClient.invalidateQueries('chats');
@@ -99,7 +97,7 @@ const ChatInput = () => {
     // eslint-disable-next-line
   }, [sendLoading, replyLoading]);
 
-  const [openFileSelector, { filesContent, plainFiles, loading, errors }] =
+  const [openFileSelector, { filesContent, plainFiles, errors, clear }] =
     useFilePicker({
       readAs: 'Text',
       accept: ['image/*', '.pdf', '.zip', '.rar'],
@@ -234,12 +232,11 @@ const ChatInput = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (errors.length) {
-    return <div>Error...</div>;
+    if (errors[0].fileSizeToolarge) {
+      toast.error('اندازه فایل حداکثر 4 مگابایت می‌باشد.');
+      clear();
+    }
   }
 
   if (!Object.keys(chat).length) {

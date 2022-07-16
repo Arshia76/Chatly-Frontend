@@ -7,15 +7,18 @@ import styles from '../styles/pages/Auth.module.css';
 import { CSSTransition } from 'react-transition-group';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useLogin, useRegister } from '../api/useAuth';
+import { useLogin, useRegister, useUploadAvatar } from '../api/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/features/authSlice';
 import Loader from '../projectComponents/Loader';
+import { toast } from 'react-toastify';
 
 const Auth = (props) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [animationType, setAnimationType] = useState('signup');
+  const [signUpData, setSignUpData] = useState({});
+  const [avatar, setAvatar] = useState('');
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -25,14 +28,44 @@ const Auth = (props) => {
     navigate(Resource.Routes.HOME);
   };
 
+  const onLoginFail = (err) => {
+    toast.error(err.response.data.message);
+  };
+
   const onRegisterSuccess = (data) => {
     dispatch(setUser(data));
     navigate(Resource.Routes.HOME);
   };
 
-  const { mutate: login, isLoading: isLoadingLogin } = useLogin(onLoginSuccess);
-  const { mutate: register, isLoading: isLoadingRegister } =
-    useRegister(onRegisterSuccess);
+  const onRegisterFail = (err) => {
+    toast.error(err.response.data.message);
+  };
+
+  const onSuccessUpload = (data) => {
+    const signData = {
+      ...signUpData,
+      avatar: data,
+    };
+    console.log(signData);
+    register(signData);
+  };
+
+  const onFailUpload = () => {
+    toast.error('خطا در بارگزاری فایل');
+  };
+
+  const { mutate: login, isLoading: isLoadingLogin } = useLogin(
+    onLoginSuccess,
+    onLoginFail
+  );
+  const { mutate: register, isLoading: isLoadingRegister } = useRegister(
+    onRegisterSuccess,
+    onRegisterFail
+  );
+  const { mutate: uploadAvatar, isLoading: isLoadingUpload } = useUploadAvatar(
+    onSuccessUpload,
+    onFailUpload
+  );
 
   const navigate = useNavigate();
 
@@ -59,7 +92,16 @@ const Auth = (props) => {
   };
 
   const onSubmitSignup = (values) => {
-    register(values);
+    if (avatar) {
+      setSignUpData(values);
+
+      const data = new FormData();
+      data.append('file', avatar);
+      data.append('user', values.username);
+      uploadAvatar(data);
+    } else {
+      register(values);
+    }
   };
 
   const signInForm = useFormik({
@@ -76,7 +118,6 @@ const Auth = (props) => {
       username: '',
       email: '',
       password: '',
-      avatar: '',
     },
     validationSchema: SignupSchema,
     onSubmit: onSubmitSignup,
@@ -86,10 +127,6 @@ const Auth = (props) => {
     if (isAuthenticated) navigate('/', { replace: true });
     // eslint-disable-next-line
   }, [isAuthenticated]);
-
-  if (isLoadingLogin || isLoadingRegister) {
-    return <Loader />;
-  }
 
   const authSide = () => {
     return (
@@ -179,7 +216,12 @@ const Auth = (props) => {
             <span className={styles.ForgotPassword}>
               رمز عبور خود را فراموش کردم؟
             </span>
-            <Button className={'SignBtn'} title={'ورود'} />
+            <Button
+              className={'SignBtn'}
+              title={!isLoadingLogin && 'ورود'}
+              disabled={isLoadingLogin}
+              icon={isLoadingLogin && Resource.Gifs.BTN_LOADER}
+            />
           </div>
         </CSSTransition>
       </form>
@@ -242,7 +284,7 @@ const Auth = (props) => {
                 value={signUpForm.values.email}
                 onChange={signUpForm.handleChange}
                 onBlur={signUpForm.handleBlur}
-                icon={Resource.Svg.PASSWORD2}
+                icon={Resource.Svg.EMAIL}
                 placeholder={'ایمیل خود را وارد کنید'}
                 error={
                   signUpForm.errors.email && signUpForm.touched.email
@@ -269,12 +311,24 @@ const Auth = (props) => {
               />
 
               <File
+                name={'file'}
+                file={avatar}
+                onChange={(e) => {
+                  setAvatar(e.target.files[0]);
+                }}
                 leadingImage={Resource.Svg.ATTACHMENT}
                 fileText={'عکس پروفایل خود را انتخاب کنید'}
                 className={'Profile'}
               />
             </div>
-            <Button className={'SignBtn'} title={'ثبت نام'} />
+            <Button
+              className={'SignBtn'}
+              title={!isLoadingRegister && !isLoadingUpload && 'ثبت نام'}
+              disabled={isLoadingRegister && isLoadingUpload}
+              icon={
+                isLoadingRegister && isLoadingUpload && Resource.Gifs.BTN_LOADER
+              }
+            />
           </form>
         </CSSTransition>
       </div>

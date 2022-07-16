@@ -21,6 +21,11 @@
   margin-top: 20px;
 }
 
+.Button.SignBtn img {
+  width: 40px !important;
+  height: 27px !important;
+}
+
 .Button.AuthSideBtn {
   background: #3aa9ab;
   color: white;
@@ -59,17 +64,15 @@
 }
 
 .Button.createGroupBtn {
-  font-size: 18px;
-  padding: 5px 30px;
+  background: #3aa9ab;
   color: white;
-  background-color: aqua;
-  width: fit-content;
+  width: 150px;
+  border: 2px solid white;
+  padding: 5px;
+  font-size: 1.6em;
+  border-radius: 20px;
+  margin-bottom: 8px;
   margin: auto;
-  border-radius: 5px;
-  margin-top: 15px;
-  transition: all 0.5s linear;
-  cursor: pointer;
-  height: 45px;
 }
 
 .Button.videoCallBtn,
@@ -89,11 +92,6 @@
 .Button.endVideoCallBtn {
   background-color: rgb(192, 33, 33);
   color: white;
-}
-
-.Button.createGroupBtn:hover {
-  color: aqua;
-  background-color: white;
 }
 
 .Button.AcceptBtn,
@@ -153,9 +151,8 @@
 }
 
 .Button.createGroupBtn img {
-  width: 45px !important;
-  height: 45px !important;
-  padding: 5px 0;
+  width: 40px !important;
+  height: 27px !important;
 }
 
 .Button:hover {

@@ -8,6 +8,19 @@ const axiosInstance = axios.create({
   },
 });
 
+const uploadAvatar = async (file) => {
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_API_ROUTE}/upload/avatar`,
+    file,
+    {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
+  return data;
+};
+
 const login = async (userData) => {
   const { data } = await axiosInstance.post(
     '/auth/login',
@@ -40,6 +53,13 @@ const getUser = async () => {
   axios.defaults.headers.common['auth-token'] = data.token;
   return data;
 };
+
+export function useUploadAvatar(onSuccess, onError) {
+  return useMutation(uploadAvatar, {
+    onSuccess,
+    onError,
+  });
+}
 
 export function useLogin(onSuccess, onError) {
   return useMutation(login, {

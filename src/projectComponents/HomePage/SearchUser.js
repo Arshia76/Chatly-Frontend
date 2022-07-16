@@ -27,8 +27,8 @@ const SearchUser = (props) => {
   const onAccessChatSuccess = () => {
     queryClient.invalidateQueries('chats');
     dispatch(toggleModalSingleChat());
+    props.setQuery('');
     toast.success('چت با موفقیت ایجاد گردید');
-    props.onClose();
   };
   const onAccessChatError = (error) => {
     console.log(error);
@@ -47,9 +47,9 @@ const SearchUser = (props) => {
         !chat.isGroupChat &&
         onlineUsers.some((data) => data.id === chat?.users?.[0]?._id),
 
-      img:
-        chat?.users?.[0]?.avatar ||
-        'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png',
+      img: chat?.users?.[0]?.avatar
+        ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users?.[0]?.avatar}`
+        : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png',
 
       username: chat?.isGroupChat ? chat?.chatName : chat?.users[0].username,
 
