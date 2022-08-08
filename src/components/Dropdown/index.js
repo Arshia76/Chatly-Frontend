@@ -6,7 +6,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 const Dropdown = forwardRef((props, ref) => {
   return (
     <div className={styles.container}>
-      <div ref={ref}>
+      <div ref={ref} style={{ display: 'flex' }}>
         <BiDotsVerticalRounded
           style={{ cursor: 'pointer' }}
           size={30}
