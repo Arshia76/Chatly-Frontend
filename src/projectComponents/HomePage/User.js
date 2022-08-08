@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import styles from '../../styles/components/HomePage/SearchUser.module.css';
 import PropTypes from 'prop-types';
-import { IoPersonRemove } from 'react-icons/io5';
+import Button from '../../components/Button';
+import Resource from '../../Resource';
 import { useRemoveFromGroupChat } from '../../api/useChat';
 import { useQueryClient } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
@@ -90,13 +91,19 @@ const User = (props) => {
   }
 
   return (
-    <div className={styles.container} onClick={onItemClick}>
+    <div className={styles.container}>
       <div className={styles.group}>
         <img src={props.img} alt={props.username} />
         <h4>{props.username}</h4>
       </div>
       {chat?.groupAdmin?._id === user.id && (
-        <IoPersonRemove size={25} color='grey' />
+        <Button
+          onClick={onItemClick}
+          className='PerformBtn'
+          title={!isLoading && 'حذف'}
+          disabled={isLoading}
+          icon={isLoading && Resource.Gifs.BTN_LOADER}
+        />
       )}
     </div>
   );
