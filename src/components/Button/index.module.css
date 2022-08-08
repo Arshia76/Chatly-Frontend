@@ -39,7 +39,7 @@
 .Button.PerformBtn {
   background: #3aa9ab;
   color: white;
-  width: 150px;
+  width: 140px;
   border: 2px solid white;
   padding: 5px;
   font-size: 1.6em;
@@ -50,6 +50,8 @@
 .Button.PerformBtn img {
   width: 40px !important;
   height: 27px !important;
+  object-fit: contain !important;
+  margin: 0 !important;
 }
 
 .Button.SocialBtn {
@@ -158,6 +160,17 @@
 .Button:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .Button.PerformBtn {
+    font-size: 13px !important;
+  }
+
+  .Button.PerformBtn img {
+    width: 30px !important;
+    height: 22px !important;
+  }
 }
 
 @media (max-width: 350px) {

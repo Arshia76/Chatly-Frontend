@@ -25,3 +25,17 @@
   font-weight: 500;
   color: var(--text-primary);
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-side);
+  width: fit-content;
+}
+
+.dropdown h4 {
+  color: var(--text-primary);
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+}

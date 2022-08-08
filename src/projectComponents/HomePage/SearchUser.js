@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import styles from '../../styles/components/HomePage/SearchUser.module.css';
 import PropTypes from 'prop-types';
-import { MdPersonAddAlt1 } from 'react-icons/md';
 import { useCreateChat, useAddToGroupChat } from '../../api/useChat';
 import { useQueryClient } from 'react-query';
 import { toggleModalSingleChat } from '../../store/features/modalSlice';
@@ -9,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToBadgeList, getCurrentChat } from '../../store/features/chatSlice';
 import { toast } from 'react-toastify';
 import moment from 'jalali-moment';
+import Button from '../../components/Button';
+import Resource from '../../Resource';
 
 const SearchUser = (props) => {
   const toastRef = useRef();
@@ -108,12 +109,18 @@ const SearchUser = (props) => {
   }
 
   return (
-    <div className={styles.container} onClick={onItemClick}>
+    <div className={styles.container}>
       <div className={styles.group}>
         <img src={props.img} alt={props.username} />
         <h4>{props.username}</h4>
       </div>
-      <MdPersonAddAlt1 size={25} color='grey' />
+      <Button
+        onClick={onItemClick}
+        className='PerformBtn'
+        title={!isLoadingAdd && modal ? 'ایجاد چت' : 'افزودن'}
+        disabled={isLoadingAdd}
+        icon={isLoadingAdd && Resource.Gifs.BTN_LOADER}
+      />
     </div>
   );
 };

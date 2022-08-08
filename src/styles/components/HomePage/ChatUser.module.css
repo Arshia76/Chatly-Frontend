@@ -6,6 +6,11 @@
   background-color: var(--chatUserBg);
   border-bottom: 1px solid rgba(0, 0, 0, 0.198);
   cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.container:hover {
+  opacity: 0.9;
 }
 
 .container span {
