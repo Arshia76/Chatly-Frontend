@@ -111,7 +111,10 @@ const ChatContainer = (props) => {
                         id={data._id}
                         moveToElement={moveToElement}
                         onClick={() => setId(null)}
-                        onDoubleClick={() => setId(data._id)}
+                        onDoubleClick={() => {
+                          setId(data._id);
+                          moveToElement(data._id);
+                        }}
                         show={id === data._id}
                         replyTo={data?.replyTo}
                         message={data.content}
@@ -160,7 +163,10 @@ const ChatContainer = (props) => {
                         id={data._id}
                         moveToElement={moveToElement}
                         onClick={() => setId(null)}
-                        onDoubleClick={() => setId(data._id)}
+                        onDoubleClick={() => {
+                          setId(data._id);
+                          moveToElement(data._id);
+                        }}
                         replyTo={data?.replyTo}
                         show={id === data._id}
                         message={data.content}

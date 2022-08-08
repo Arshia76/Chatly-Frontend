@@ -30,7 +30,9 @@ export const messageSlice = createSlice({
       state.messages = [...state.messages, action.payload];
     },
     remove: (state, action) => {
-      state.messages.filter((message) => message.id !== action.payload.id);
+      state.messages = state.messages.filter(
+        (message) => message._id.toString() !== action.payload._id.toString()
+      );
     },
     search: (state, action) => {
       const array = current(state.messages);

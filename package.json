@@ -30,6 +30,7 @@
     "use-dynamic-refs": "^1.0.0",
     "use-file-picker": "^1.4.2",
     "use-local-storage": "^2.3.6",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

@@ -94,6 +94,20 @@ const reply = async ([messageData, messageId]) => {
   return data;
 };
 
+const deleteMessage = async ([messageId, isFile]) => {
+  const { data } = await axios.delete(
+    `${process.env.REACT_APP_API_ROUTE}/message/delete/${messageId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+      data: JSON.stringify(isFile),
+    }
+  );
+  return data;
+};
+
 export function useGetChatMessages(id, onSuccess, onError) {
   return useQuery(['messages', id], () => getChatMessages(id), {
     onSuccess,
@@ -119,6 +133,13 @@ export function useReplyMessage(onSuccess, onError) {
 
 export function useUploadMessage(onSuccess, onError) {
   return useMutation(uploadFile, {
+    onSuccess,
+    onError,
+  });
+}
+
+export function useDeleteMessage(onSuccess, onError) {
+  return useMutation(deleteMessage, {
     onSuccess,
     onError,
   });

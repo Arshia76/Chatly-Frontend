@@ -2,15 +2,44 @@ import styles from '../../styles/components/HomePage/Message.module.css';
 import PropTypes from 'prop-types';
 import ModalImage from 'react-modal-image';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMessageToReply } from '../../store/features/messageSlice';
+import { setMessageToReply, remove } from '../../store/features/messageSlice';
 import { CgFileDocument } from 'react-icons/cg';
-// import { useDownloadDocument } from '../../api/useMessage';
+import { useDeleteMessage } from '../../api/useMessage';
+import { toast } from 'react-toastify';
 import Player from '../Player';
 
 const Message = (props) => {
   const dispatch = useDispatch();
-  // const { mutate: downloadDocument } = useDownloadDocument();
   const user = useSelector((state) => state.auth.user);
+
+  const onDeleteMessageSuccess = (data) => {
+    dispatch(remove(data));
+    toast.success('پیام با موفقیت حذف گردید.');
+  };
+
+  const onDeleteMessageFail = (err) => {
+    console.log(err);
+    toast.error('خطا در حذف پیام.');
+    toast.error(err.response.data.message);
+  };
+
+  const { mutate: deleteMessage, isLoading: isLoadingDeleteMessage } =
+    useDeleteMessage(onDeleteMessageSuccess, onDeleteMessageFail);
+
+  const removeMessage = (file) => {
+    const messageId = props.id;
+    if (file) {
+      const data = {
+        isFile: true,
+      };
+      deleteMessage([messageId, data]);
+    } else {
+      const data = {
+        isFile: false,
+      };
+      deleteMessage([messageId, data]);
+    }
+  };
 
   if (props.type === 'text') {
     return (
@@ -112,6 +141,9 @@ const Message = (props) => {
             پاسخ
           </h2>
           <h2 className={styles.option}>ارسال</h2>
+          <h2 className={styles.option} onClick={() => removeMessage(false)}>
+            حذف
+          </h2>
         </div>
       </div>
     );
@@ -220,6 +252,9 @@ const Message = (props) => {
             پاسخ
           </h2>
           <h2 className={styles.option}>ارسال</h2>
+          <h2 className={styles.option} onClick={() => removeMessage(true)}>
+            حذف
+          </h2>
         </div>
       </div>
     );
@@ -328,6 +363,9 @@ const Message = (props) => {
               پاسخ
             </h2>
             <h2 className={styles.option}>ارسال</h2>
+            <h2 className={styles.option} onClick={() => removeMessage(true)}>
+              حذف
+            </h2>
           </div>
         </div>
       </>
@@ -412,9 +450,6 @@ const Message = (props) => {
           <div
             className={styles.content}
             onClick={() =>
-              // downloadDocument({
-              //   file: `${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`,
-              // })
               window.open(
                 `${process.env.REACT_APP_SOCKET_ROUTE}${props.message}`
               )
@@ -447,6 +482,9 @@ const Message = (props) => {
             پاسخ
           </h2>
           <h2 className={styles.option}>ارسال</h2>
+          <h2 className={styles.option} onClick={() => removeMessage(true)}>
+            حذف
+          </h2>
         </div>
       </div>
     );

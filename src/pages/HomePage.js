@@ -12,18 +12,16 @@ import VoiceModal from '../projectComponents/Modal/Voice';
 import SettingModal from '../projectComponents/Modal/Setting';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOnlineUsers } from '../store/features/userSlice';
-import { io } from 'socket.io-client';
-import { getSocket } from '../store/features/chatSlice';
 
-let socket;
 const HomePage = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
+  const socket = useSelector((state) => state.chat.socket);
+
   useEffect(() => {
-    socket = io(process.env.REACT_APP_SOCKET_ROUTE);
-    dispatch(getSocket(socket));
     socket.emit('setup', user);
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

@@ -68,6 +68,20 @@ const addToGroup = async (addData) => {
   return data;
 };
 
+const leaveGroup = async (chatData) => {
+  const { data } = await axios.put(
+    `${baseURL}/chat/group/leave`,
+    JSON.stringify(chatData),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    }
+  );
+  return data;
+};
+
 const removeFromGroup = async (removeData) => {
   const { data } = await axios.put(
     `${baseURL}/chat/group/remove`,
@@ -155,6 +169,13 @@ export function useRenameGroupChat(onSuccess, onError) {
 
 export function useAddToGroupChat(onSuccess, onError) {
   return useMutation(addToGroup, {
+    onSuccess,
+    onError,
+  });
+}
+
+export function useLeaveGroupChat(onSuccess, onError) {
+  return useMutation(leaveGroup, {
     onSuccess,
     onError,
   });

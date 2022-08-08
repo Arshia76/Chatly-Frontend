@@ -10,29 +10,36 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import {
   getFile,
-  add,
   removeMessageToReply,
+  add,
 } from '../store/features/messageSlice';
 import moment from 'jalali-moment';
 import { useSendMessage, useReplyMessage } from '../api/useMessage';
-import { useIncreseUnreadMessages } from '../api/useChat';
+import Player from './Player';
 import { useSelector } from 'react-redux';
 import {
   toggleModalFile,
   toggleModalVoice,
 } from '../store/features/modalSlice';
 import { useQueryClient } from 'react-query';
+import { useIncreseUnreadMessages } from '../api/useChat';
 import { FaMicrophone } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { CgFileDocument } from 'react-icons/cg';
 
 let id;
+
 const ChatInput = () => {
-  const queryClient = useQueryClient();
   const socket = useSelector((state) => state.chat.socket);
   const messageToReply = useSelector((state) => state.message.messageToReply);
   const user = useSelector((state) => state.auth.user);
   const inputRef = useRef();
+  const queryClient = useQueryClient();
+
+  const chat = useSelector((state) => state.chat.currentChat);
+  const onlineUsers = useSelector((state) => state.user.onlineUsers);
+
+  const dispatch = useDispatch();
 
   const onIncreseUnreadMessagesSuccess = () => {
     queryClient.invalidateQueries('chats');
@@ -41,50 +48,51 @@ const ChatInput = () => {
   const { mutate: increaseUnreadMessages } = useIncreseUnreadMessages(
     onIncreseUnreadMessagesSuccess
   );
-  const chat = useSelector((state) => state.chat.currentChat);
-
-  const dispatch = useDispatch();
 
   const onReplySuccess = (data) => {
-    socket?.emit('new message', data);
+    socket?.emit('new message', {
+      message: data,
+      token: localStorage.getItem('auth-token'),
+    });
     dispatch(removeMessageToReply());
   };
 
   const onSendSuccess = (data) => {
-    socket?.emit('new message', data);
+    socket?.emit('new message', {
+      message: data,
+      token: localStorage.getItem('auth-token'),
+    });
   };
 
-  const {
-    mutate: sendMessage,
-    isLoading: sendLoading,
-    isIdle: isIdleSend,
-  } = useSendMessage(onSendSuccess);
+  const { mutate: sendMessage, isSuccess: isSuccessSend } =
+    useSendMessage(onSendSuccess);
   const {
     mutate: reply,
-    isLoading: replyLoading,
-    isIdle: isIdleReply,
+
+    isSuccess: isSuccessReply,
   } = useReplyMessage(onReplySuccess);
 
   const [showEmoji, setShowEmoji] = useState(false);
   const [text, setText] = useState({});
 
   useEffect(() => {
-    id = chat.id;
-  }, [chat.id]);
-
-  useEffect(() => {
     inputRef?.current?.focus();
   }, [messageToReply]);
 
   useEffect(() => {
-    if ((!sendLoading && isIdleSend) || (!replyLoading && isIdleReply)) {
+    id = chat.id;
+  }, [chat]);
+
+  useEffect(() => {
+    if (isSuccessSend || isSuccessReply) {
       socket?.on('message recieved', (recievedData) => {
-        console.log('called sockeet');
-        console.log(id);
-        console.log(recievedData.chat._id);
-        if (!id || Object.keys(id).length < 0 || id !== recievedData.chat._id) {
+        const isOnline = onlineUsers.find(
+          (user) => user.id === recievedData?.chat?.users[1]._id
+        );
+
+        if (!isOnline || !id || id !== recievedData?.chat?._id) {
           increaseUnreadMessages({
-            chatId: recievedData.chat._id,
+            chatId: recievedData?.chat?._id,
             message: recievedData,
           });
         } else {
@@ -95,7 +103,7 @@ const ChatInput = () => {
       });
     }
     // eslint-disable-next-line
-  }, [sendLoading, replyLoading]);
+  }, [isSuccessSend, isSuccessReply, onlineUsers, socket, dispatch]);
 
   const [openFileSelector, { filesContent, plainFiles, errors, clear }] =
     useFilePicker({
@@ -284,17 +292,7 @@ const ChatInput = () => {
             size={25}
             style={{ color: 'var(--text-primary)', marginLeft: '15px' }}
           />
-          <audio controls controlsList='nodownload'>
-            <source
-              src={`${process.env.REACT_APP_SOCKET_ROUTE}${messageToReply?.content}`}
-              type='audio/ogg'
-            />
-            <source
-              src={`${process.env.REACT_APP_SOCKET_ROUTE}${messageToReply?.content}`}
-              type='audio/mpeg'
-            />
-            امکان اجرای ویس برای مرورگر شما وجود ندارد
-          </audio>
+          <Player message={messageToReply?.content} />
         </div>
       ) : messageToReply?.type === 'document' ? (
         <div className={styles.replyContainer}>

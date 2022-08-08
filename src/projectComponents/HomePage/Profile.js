@@ -20,7 +20,6 @@ const Profile = (props) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const socket = useSelector((state) => state.chat.socket);
 
   const ref = useRef();
 
@@ -81,7 +80,6 @@ const Profile = (props) => {
           />
           <HiOutlineLogout
             onClick={() => {
-              socket.disconnect();
               dispatch(logoutUser());
               dispatch(getCurrentChat({}));
             }}

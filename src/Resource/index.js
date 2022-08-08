@@ -24,6 +24,7 @@ import LOADER from './gif/loader.gif';
 import RECORDER from './gif/voice-recorder.gif';
 import BTN_LOADER from './gif/btn-loader.svg';
 import BTN_BLACK_LOADER from './gif/btn-loader-black.svg';
+import NOTIFACATION from './sound/notification-sound.mp3';
 
 class Resource {
   static Svg = {
@@ -45,6 +46,10 @@ class Resource {
     PLUS,
     CROSS,
     CROSSWHITE,
+  };
+
+  static Sounds = {
+    NOTIFACATION: `${window.location.origin}${NOTIFACATION}`,
   };
 
   static Gifs = {
