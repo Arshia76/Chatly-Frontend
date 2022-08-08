@@ -188,8 +188,9 @@ const GroupProfileModal = () => {
                       id={user._id}
                       username={user.username}
                       img={
-                        user.avatar ||
-                        'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                        user.avatar
+                          ? `${process.env.REACT_APP_SOCKET_ROUTE}${user.avatar}`
+                          : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
                       }
                     />
                   );
