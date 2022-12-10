@@ -39,7 +39,7 @@ const Sidebar = () => {
       >
         <Profile
           username='ارشیا'
-          profileImg='https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+          profileImg='https://www.w3schools.com/howto/img_avatar.png'
         />
         <Input
           fieldClassName={'SearchUserField'}
@@ -77,10 +77,10 @@ const Sidebar = () => {
                         }
                         img={
                           chat.isGroupChat
-                            ? 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                            ? 'https://www.w3schools.com/howto/img_avatar.png'
                             : chat?.users[0].avatar
                             ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users[0].avatar}`
-                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                            : 'https://www.w3schools.com/howto/img_avatar.png'
                         }
                         username={
                           chat?.isGroupChat
@@ -128,10 +128,10 @@ const Sidebar = () => {
                       }
                       img={
                         chat.isGroupChat
-                          ? 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          ? 'https://www.w3schools.com/howto/img_avatar.png'
                           : chat?.users[0].avatar
                           ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users[0].avatar}`
-                          : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          : 'https://www.w3schools.com/howto/img_avatar.png'
                       }
                       username={
                         chat?.isGroupChat

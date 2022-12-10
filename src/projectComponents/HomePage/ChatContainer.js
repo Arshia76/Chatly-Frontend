@@ -14,7 +14,6 @@ const ChatContainer = (props) => {
   const [filter, setFilter] = useState();
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
-  const [dates, setDates] = useState([]);
 
   const moveToElement = (id) => {
     console.log(id);
@@ -48,7 +47,7 @@ const ChatContainer = (props) => {
 
   const chat = useSelector((state) => state.chat.currentChat);
   const user = useSelector((state) => state.auth.user);
-  const { isLoading } = useGetChatMessages(
+  const { isFetching: isLoading } = useGetChatMessages(
     chat.id,
     onGetMessagesSuccess,
     onGetMessagesError
@@ -121,7 +120,7 @@ const ChatContainer = (props) => {
                         avatar={
                           data.sender.avatar
                             ? `${process.env.REACT_APP_SOCKET_ROUTE}${data.sender.avatar}`
-                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                            : 'https://www.w3schools.com/howto/img_avatar.png'
                         }
                         fromSelf={data.sender._id === user.id}
                       />
@@ -170,7 +169,7 @@ const ChatContainer = (props) => {
                         avatar={
                           data.sender.avatar
                             ? `${process.env.REACT_APP_SOCKET_ROUTE}${data.sender.avatar}`
-                            : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                            : 'https://www.w3schools.com/howto/img_avatar.png'
                         }
                         fromSelf={data.sender._id === user.id}
                       />

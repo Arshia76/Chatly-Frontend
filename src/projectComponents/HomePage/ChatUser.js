@@ -43,7 +43,7 @@ const ChatUser = (props) => {
       onClick={accessChat}
     >
       <div className={styles.group}>
-        <img src={props.img} alt={props.chatName} />
+        <img src={props.img.toString()} alt={props.chatName} />
         <span>
           {props.isOnline && (
             <GoPrimitiveDot

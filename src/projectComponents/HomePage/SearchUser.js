@@ -50,7 +50,7 @@ const SearchUser = (props) => {
 
       img: chat?.users?.[0]?.avatar
         ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users?.[0]?.avatar}`
-        : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png',
+        : 'https://www.w3schools.com/howto/img_avatar.png',
 
       username: chat?.isGroupChat ? chat?.chatName : chat?.users[0].username,
 

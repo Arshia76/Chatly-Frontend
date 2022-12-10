@@ -36,7 +36,7 @@ const GroupProfileModal = () => {
 
       img: chat?.users?.[0]?.avatar
         ? `${process.env.REACT_APP_SOCKET_ROUTE}${chat?.users?.[0]?.avatar}`
-        : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png',
+        : 'https://www.w3schools.com/howto/img_avatar.png',
 
       username: chat?.isGroupChat ? chat?.chatName : chat?.users[0].username,
 
@@ -151,7 +151,7 @@ const GroupProfileModal = () => {
                     username={user.username}
                     img={
                       user.avatar ||
-                      'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                      'https://www.w3schools.com/howto/img_avatar.png'
                     }
                   />
                 );
@@ -190,7 +190,7 @@ const GroupProfileModal = () => {
                       img={
                         user.avatar
                           ? `${process.env.REACT_APP_SOCKET_ROUTE}${user.avatar}`
-                          : 'https://cdn3.iconfinder.com/data/icons/generic-avatars/128/avatar_portrait_man_male_5-128.png'
+                          : 'https://www.w3schools.com/howto/img_avatar.png'
                       }
                     />
                   );

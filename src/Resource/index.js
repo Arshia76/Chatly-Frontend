@@ -24,6 +24,7 @@ import LOADER from './gif/loader.gif';
 import RECORDER from './gif/voice-recorder.gif';
 import BTN_LOADER from './gif/btn-loader.svg';
 import BTN_BLACK_LOADER from './gif/btn-loader-black.svg';
+import CHAT from './images/chat.png';
 
 class Resource {
   static Svg = {
@@ -57,6 +58,7 @@ class Resource {
   static Images = {
     GOOGLE,
     FACEBOOK,
+    CHAT,
   };
 
   static Blob = {

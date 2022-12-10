@@ -11,10 +11,9 @@ import { useLogin, useRegister, useUploadAvatar } from '../api/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/features/authSlice';
-import Loader from '../projectComponents/Loader';
 import { toast } from 'react-toastify';
 
-const Auth = (props) => {
+const Auth = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [animationType, setAnimationType] = useState('signup');
   const [signUpData, setSignUpData] = useState({});
@@ -131,12 +130,7 @@ const Auth = (props) => {
   const authSide = () => {
     return (
       <div className={styles.AuthSide}>
-        <img
-          src={
-            'https://cdn3.iconfinder.com/data/icons/education-and-learning-set-2-1/256/70-128.png'
-          }
-          alt='logo'
-        />
+        <img src={Resource.Images.CHAT} alt='logo' />
         <h4>به پیام رسان خوش آمدید.</h4>
         <Button
           className={'AuthSideBtn'}
