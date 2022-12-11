@@ -150,8 +150,9 @@ const GroupProfileModal = () => {
                     id={user._id}
                     username={user.username}
                     img={
-                      `${process.env.REACT_APP_SOCKET_ROUTE}${user.avatar}` ||
-                      'https://www.w3schools.com/howto/img_avatar.png'
+                      user.avatar
+                        ? `${process.env.REACT_APP_SOCKET_ROUTE}${user.avatar}`
+                        : 'https://www.w3schools.com/howto/img_avatar.png'
                     }
                   />
                 );
