@@ -347,15 +347,18 @@ const ChatInput = () => {
             name='file'
           />
         </div>
-        <FaMicrophone
-          onClick={() => dispatch(toggleModalVoice())}
-          size='25'
-          color='var(--text-secondary)'
-          style={{ cursor: 'pointer' }}
-        />
-        <div className={styles.send} onClick={send}>
-          <FaTelegramPlane size={20} color='#ffffff' />
-        </div>
+        {text?.message?.length > 0 ? (
+          <div className={styles.send} onClick={send}>
+            <FaTelegramPlane size={20} color='#ffffff' />
+          </div>
+        ) : (
+          <FaMicrophone
+            onClick={() => dispatch(toggleModalVoice())}
+            size='25'
+            color='var(--text-secondary)'
+            style={{ cursor: 'pointer' }}
+          />
+        )}
 
         <div ref={ref}>
           <Picker
