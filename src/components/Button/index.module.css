@@ -133,8 +133,7 @@
   height: 40px;
 }
 
-.Button.ProfileBtn,
-.Button.ProfilePerformBtn {
+.Button.ProfileBtn {
   cursor: pointer;
   background-color: var(--background-side);
   color: var(--text-secondary);
