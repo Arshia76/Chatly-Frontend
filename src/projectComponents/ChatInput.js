@@ -175,7 +175,7 @@ const ChatInput = () => {
   };
 
   const onEnterPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && text?.message?.length > 0) {
       e.preventDefault();
       setShowEmoji(false);
       const data = {
