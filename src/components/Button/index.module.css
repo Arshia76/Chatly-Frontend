@@ -36,6 +36,10 @@
   border-radius: 20px;
 }
 
+.Button.ProfilePerformBtn {
+  margin-bottom: 15px;
+}
+
 .Button.PerformBtn,
 .Button.ProfilePerformBtn {
   background: #3aa9ab;
