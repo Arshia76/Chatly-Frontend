@@ -201,7 +201,7 @@ const SingleChatModal = () => {
         {file && (
           <Button
             onClick={updateUserAvatar}
-            className='PerformBtn'
+            className='ProfilePerformBtn'
             title={!isLoadingAvatar && 'بروزرسانی تصویر'}
             disabled={isLoadingAvatar}
             icon={isLoadingAvatar && Resource.Gifs.BTN_LOADER}

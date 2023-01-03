@@ -36,7 +36,8 @@
   border-radius: 20px;
 }
 
-.Button.PerformBtn {
+.Button.PerformBtn,
+.Button.ProfilePerformBtn {
   background: #3aa9ab;
   color: white;
   width: 140px;
@@ -44,10 +45,10 @@
   padding: 5px;
   font-size: 1.6em;
   border-radius: 20px;
-  margin-bottom: 15px;
 }
 
-.Button.PerformBtn img {
+.Button.PerformBtn img,
+.Button.ProfilePerformBtn img {
   width: 40px !important;
   height: 27px !important;
   object-fit: contain !important;
@@ -128,7 +129,8 @@
   height: 40px;
 }
 
-.Button.ProfileBtn {
+.Button.ProfileBtn,
+.Button.ProfilePerformBtn {
   cursor: pointer;
   background-color: var(--background-side);
   color: var(--text-secondary);
@@ -163,11 +165,13 @@
 }
 
 @media (max-width: 600px) {
-  .Button.PerformBtn {
+  .Button.PerformBtn,
+  .Button.ProfilePerformBtn {
     font-size: 13px !important;
   }
 
-  .Button.PerformBtn img {
+  .Button.PerformBtn img,
+  .Button.ProfilePerformBtn img {
     width: 30px !important;
     height: 22px !important;
   }
