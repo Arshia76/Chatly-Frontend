@@ -55,10 +55,6 @@ const GroupChatModal = () => {
     // eslint-disable-next-line
   }, [query]);
 
-  const onClose = () => {
-    if (!isLoading) dispatch(toggleModalGroupChat());
-  };
-
   const createGroupChat = () => {
     const data = {
       name: chat,
@@ -66,7 +62,6 @@ const GroupChatModal = () => {
     };
 
     createGroup(data);
-    onClose();
   };
 
   return (
