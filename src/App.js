@@ -28,9 +28,9 @@ function App() {
     navigate('/');
   };
 
-  const { isLoading } = useUser(onSuccess);
+  const { isFetching } = useUser(onSuccess);
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loader />;
   }
 
